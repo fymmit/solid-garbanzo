@@ -13,20 +13,21 @@ internal class Program
 
         InitWindow(windowWidth, windowHeight, "solid-garbanzo");
 
-        Vector2 position = new((float)windowWidth / 2, (float)windowHeight / 2);
-        Camera2D camera = new();
-        camera.Target = position;
-        camera.Offset = new(windowWidth / 2, windowHeight / 2);
-        camera.Zoom = 1f;
-
         SetTargetFPS(60);
-
-        var speed = 100f;
 
         var image = GenImageChecked(1000, 1000, 32, 32, Color.DarkGray, Color.LightGray);
         var texture = LoadTextureFromImage(image);
 
-        var player = new Player();
+        List<GameObject> gameObjects = [];
+
+        Vector2 position = new((float)windowWidth / 2, (float)windowHeight / 2);
+        var player = GameObject.Create<Player>(position);
+        gameObjects.Add(player);
+
+        Camera2D camera = new();
+        camera.Target = player.Position;
+        camera.Offset = new(windowWidth / 2, windowHeight / 2);
+        camera.Zoom = 1f;
 
         while (!WindowShouldClose())
         {
@@ -34,15 +35,13 @@ internal class Program
             // Update(); -- game logic things
             // Draw(); -- draw current game state
 
-            var movement = new Vector2();
-            if (IsKeyDown(KeyboardKey.A)) movement.X += -1;
-            if (IsKeyDown(KeyboardKey.D)) movement.X += 1;
-            if (IsKeyDown(KeyboardKey.W)) movement.Y += -1;
-            if (IsKeyDown(KeyboardKey.S)) movement.Y += 1;
+            var delta = GetFrameTime();
+            foreach (var go in gameObjects)
+            {
+                go.Update(delta);
+            }
 
-            position += movement * GetFrameTime() * speed;
-
-            camera.Target = position;
+            camera.Target = player.Position;
 
             var mousePos = GetMousePosition();
             var mouseWorldPos = GetScreenToWorld2D(mousePos, camera);
@@ -63,12 +62,7 @@ internal class Program
 
             var radius = 32f;
             var color = Color.Blue;
-            if (CheckCollisionPointCircle(mouseWorldPos, position, radius))
-            {
-                color = Color.DarkBlue;
-            }
-
-            DrawCircle((int)position.X, (int)position.Y, radius, color);
+            DrawCircle((int)player.Position.X, (int)player.Position.Y, radius, color);
 
             EndMode2D();
 
