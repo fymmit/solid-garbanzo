@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
+using Game.GameObjects;
 
 internal class Program
 {
@@ -25,8 +26,14 @@ internal class Program
         var image = GenImageChecked(1000, 1000, 32, 32, Color.DarkGray, Color.LightGray);
         var texture = LoadTextureFromImage(image);
 
+        var player = new Player();
+
         while (!WindowShouldClose())
         {
+            // TODO: implement some sort of game loop along the lines of:
+            // Update(); -- game logic things
+            // Draw(); -- draw current game state
+
             var movement = new Vector2();
             if (IsKeyDown(KeyboardKey.A)) movement.X += -1;
             if (IsKeyDown(KeyboardKey.D)) movement.X += 1;
