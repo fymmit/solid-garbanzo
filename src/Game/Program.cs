@@ -5,6 +5,8 @@ using Game.GameObjects;
 
 internal class Program
 {
+    internal static GameObjectManager GameObjectManager = new GameObjectManager();
+
     [STAThread]
     private static void Main(string[] args)
     {
@@ -18,11 +20,10 @@ internal class Program
         var image = GenImageChecked(1000, 1000, 32, 32, Color.DarkGray, Color.LightGray);
         var texture = LoadTextureFromImage(image);
 
-        List<GameObject> gameObjects = [];
-
         Vector2 position = new((float)windowWidth / 2, (float)windowHeight / 2);
-        var player = GameObject.Create<Player>(position);
-        gameObjects.Add(player);
+        Vector2 position2 = new((float)windowWidth / 3, (float)windowHeight / 3);
+        var player = GameObjectManager.Create<Player>(position);
+        GameObjectManager.Create<Player>(position2);
 
         Camera2D camera = new();
         camera.Target = player.Position;
@@ -36,7 +37,7 @@ internal class Program
             // Draw(); -- draw current game state
 
             var delta = GetFrameTime();
-            foreach (var go in gameObjects)
+            foreach (var go in GameObjectManager.GameObjects)
             {
                 go.Update(delta);
             }
@@ -62,7 +63,10 @@ internal class Program
 
             var radius = 32f;
             var color = Color.Blue;
-            DrawCircle((int)player.Position.X, (int)player.Position.Y, radius, color);
+            foreach (var go in GameObjectManager.GameObjects)
+            {
+                DrawCircle((int)go.Position.X, (int)go.Position.Y, radius, color);
+            }
 
             EndMode2D();
 
