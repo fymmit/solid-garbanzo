@@ -12,4 +12,6 @@ internal class GameObject
     }
 
     internal virtual void Update(float delta) { }
+
+    internal virtual void Draw() { }
 }

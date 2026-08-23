@@ -2,6 +2,7 @@
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using Game.GameObjects;
+using Game.Events;
 
 internal class Program
 {
@@ -10,6 +11,8 @@ internal class Program
     [STAThread]
     private static void Main(string[] args)
     {
+        DamageEventChannel.DamageEvent += OnDamage;
+
         var windowWidth = 800;
         var windowHeight = 480;
 
@@ -23,7 +26,7 @@ internal class Program
         Vector2 position = new((float)windowWidth / 2, (float)windowHeight / 2);
         Vector2 position2 = new((float)windowWidth / 3, (float)windowHeight / 3);
         var player = GameObjectManager.Create<Player>(position);
-        GameObjectManager.Create<Player>(position2);
+        GameObjectManager.Create<Enemy>(position2);
 
         Camera2D camera = new();
         camera.Target = player.Position;
@@ -61,11 +64,11 @@ internal class Program
             DrawRectangle((int)rec2.X, (int)rec2.Y, (int)rec2.Width, (int)rec2.Height, Color.Yellow);
             DrawRectangle((int)rec3.X, (int)rec3.Y, (int)rec3.Width, (int)rec3.Height, Color.Orange);
 
-            var radius = 32f;
-            var color = Color.Blue;
+            // var radius = 32f;
             foreach (var go in GameObjectManager.GameObjects)
             {
-                DrawCircle((int)go.Position.X, (int)go.Position.Y, radius, color);
+                go.Draw();
+                // DrawCircle((int)go.Position.X, (int)go.Position.Y, radius, go.Color);
             }
 
             EndMode2D();
@@ -74,6 +77,11 @@ internal class Program
         }
 
         CloseWindow();
+    }
+
+    private static void OnDamage(int damage)
+    {
+        Console.WriteLine($"OnDamage: {damage}");
     }
 }
 
