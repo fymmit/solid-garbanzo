@@ -11,6 +11,8 @@ internal class GameObject
         Position = new();
     }
 
+    internal virtual void Ready() { }
+
     internal virtual void Update(float delta) { }
 
     internal virtual void Draw() { }

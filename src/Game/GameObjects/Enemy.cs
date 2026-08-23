@@ -16,6 +16,11 @@ internal class Enemy : GameObject, IHarmful
     public float ColliderRadius => _radius;
     public int Damage => 5;
 
+    internal override void Ready()
+    {
+        Console.WriteLine("Enemy created");
+    }
+
     internal override void Update(float delta)
     {
         Position += Vector2.UnitX * delta * _speed;

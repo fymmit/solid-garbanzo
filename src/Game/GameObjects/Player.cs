@@ -13,6 +13,11 @@ internal class Player : GameObject
     private Color _color = Color.Blue;
     private float _radius = 32f;
 
+    internal override void Ready()
+    {
+        Console.WriteLine("Player created");
+    }
+
     internal override void Update(float delta)
     {
         var movement = new Vector2();

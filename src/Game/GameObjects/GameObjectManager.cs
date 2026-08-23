@@ -11,6 +11,8 @@ internal class GameObjectManager
         var instance = new T();
         GameObjects.Add(instance);
 
+        instance.Ready();
+
         return instance;
     }
 
