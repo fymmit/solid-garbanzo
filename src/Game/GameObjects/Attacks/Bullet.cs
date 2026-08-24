@@ -4,12 +4,18 @@ namespace Game.GameObjects.Attacks;
 
 public class Bullet : GameObject
 {
-    private Vector2 _direction;
+    public Vector2 Direction
+    {
+        get; set
+        {
+            field = value / value.Length();
+        }
+    }
     private float _speed = 50f;
 
     public void SetDirection(Vector2 direction)
     {
-        _direction = direction / direction.Length();
+        Direction = direction / direction.Length();
     }
 
     public Bullet()
@@ -19,13 +25,10 @@ public class Bullet : GameObject
         ];
     }
 
-    public override void Ready()
-    {
-        Console.WriteLine(_direction);
-    }
+    public override void Ready() { }
 
     public override void Update(float delta)
     {
-        Position += _direction * _speed * delta;
+        Position += Direction * _speed * delta;
     }
 }
