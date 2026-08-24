@@ -2,7 +2,9 @@
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using Game.GameObjects;
+using Game.GameObjects.Player;
 using Game.Events;
+using Game.GameObjects.Traits;
 
 internal class Program
 {
@@ -47,13 +49,21 @@ internal class Program
 
     private static void Update()
     {
+        UpdateEventChannel.InvokeUpdateLoopStartedEvent();
+
         var delta = GetFrameTime();
         foreach (var go in GameObjectManager.GameObjects)
         {
             go.Update(delta);
+            foreach (var updatable in go.GetComponents<IUpdatable>())
+            {
+                updatable.Update(delta);
+            }
         }
 
         _camera.Target = _player?.Position ?? new();
+
+        UpdateEventChannel.InvokeUpdateLoopFinishedEvent();
     }
 
     private static void Draw()
@@ -74,7 +84,7 @@ internal class Program
 
         foreach (var go in GameObjectManager.GameObjects)
         {
-            go.Draw();
+            go.GetComponent<IRenderable>()?.Render();
         }
 
         EndMode2D();

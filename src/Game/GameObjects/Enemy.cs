@@ -16,19 +16,39 @@ internal class Enemy : GameObject, IHarmful
     public float ColliderRadius => _radius;
     public int Damage => 5;
 
-    internal override void Ready()
+    public Enemy()
     {
-        Console.WriteLine("Enemy created");
+        Components = [
+            new Renderer(this, Color.Red, 24f, Shape.Triangle)
+        ];
     }
 
-    internal override void Update(float delta)
+    internal override void Ready()
+    {
+        Console.WriteLine("Enemy ready.");
+    }
+
+    public override void Update(float delta)
     {
         Position += Vector2.UnitX * delta * _speed;
     }
-
-    internal override void Draw()
-    {
-        DrawPoly(Position, 3, _radius, 0, _color);
-    }
 }
 
+internal class EnemyRenderer : IRenderable
+{
+    public Vector2 Position => _parentObject.Position;
+
+    private GameObject _parentObject;
+    private float _radius = 16f;
+
+    internal EnemyRenderer(GameObject gameObject)
+    {
+        _parentObject = gameObject;
+    }
+
+    public void Render()
+    {
+        DrawPoly(Position, 3, _radius + 3, 0, Color.Black);
+        DrawPoly(Position, 3, _radius, 0, Color.Red);
+    }
+}

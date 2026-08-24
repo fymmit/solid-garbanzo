@@ -10,3 +10,4 @@ public static class DamageEventChannel
         Console.WriteLine($"Damage event invoked with {damage} damage");
     }
 }
+

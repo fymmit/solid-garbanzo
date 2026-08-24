@@ -1,19 +1,31 @@
 using System.Numerics;
+using Game.GameObjects.Traits;
 
 namespace Game.GameObjects;
 
-internal class GameObject
+public class GameObject : IUpdatable
 {
+    public IComposable[] Components { get; protected set; }
     public Vector2 Position { get; set; }
 
     internal GameObject()
     {
+        Components = [];
         Position = new();
     }
 
     internal virtual void Ready() { }
 
-    internal virtual void Update(float delta) { }
+    public virtual void Update(float delta) { }
 
-    internal virtual void Draw() { }
+    internal T? GetComponent<T>()
+    {
+        return Components.OfType<T>().FirstOrDefault();
+    }
+
+    internal IEnumerable<T> GetComponents<T>()
+    {
+        return Components.OfType<T>();
+    }
 }
+
