@@ -5,7 +5,7 @@ namespace Game.GameObjects;
 
 internal class GameObjectManager
 {
-    internal List<GameObject> GameObjects = [];
+    internal List<GameObject> GameObjects { get; private set; } = [];
     private List<GameObject> _toBeAdded = [];
     private List<GameObject> _toBeRemoved = [];
 
