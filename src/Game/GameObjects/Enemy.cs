@@ -1,6 +1,5 @@
 using System.Numerics;
 using Raylib_cs;
-using static Raylib_cs.Raylib;
 using Game.Traits;
 
 namespace Game.GameObjects;
@@ -16,6 +15,8 @@ public class Enemy : GameObject, IHarmful
     public float ColliderRadius => _radius;
     public int Damage => 5;
 
+    private Player.Player? _player;
+
     public Enemy()
     {
         Components = [
@@ -26,29 +27,18 @@ public class Enemy : GameObject, IHarmful
     public override void Ready()
     {
         Console.WriteLine("Enemy ready.");
+        _player = Program.GameObjectManager.GameObjects.OfType<Player.Player>().FirstOrDefault();
     }
 
     public override void Update(float delta)
     {
-        Position += Vector2.UnitX * delta * _speed;
+        var direction = Vector2.UnitX;
+        if (_player is not null)
+        {
+            direction = _player.Position - Position;
+            direction /= direction.Length();
+        }
+        Position += direction * delta * _speed;
     }
 }
 
-internal class EnemyRenderer : IRenderable
-{
-    public Vector2 Position => _parentObject.Position;
-
-    private GameObject _parentObject;
-    private float _radius = 16f;
-
-    internal EnemyRenderer(GameObject gameObject)
-    {
-        _parentObject = gameObject;
-    }
-
-    public void Render()
-    {
-        DrawPoly(Position, 3, _radius + 3, 0, Color.Black);
-        DrawPoly(Position, 3, _radius, 0, Color.Red);
-    }
-}
