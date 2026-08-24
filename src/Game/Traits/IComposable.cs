@@ -1,4 +1,6 @@
-namespace Game.GameObjects.Traits;
+using Game.GameObjects;
+
+namespace Game.Traits;
 
 public interface IComposable
 {

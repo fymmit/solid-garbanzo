@@ -1,5 +1,5 @@
 using static Raylib_cs.Raylib;
-using Game.GameObjects.Traits;
+using Game.Traits;
 
 namespace Game.GameObjects.Player;
 

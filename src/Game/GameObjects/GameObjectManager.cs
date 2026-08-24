@@ -19,8 +19,6 @@ internal class GameObjectManager
         var instance = new T();
         _toBeAdded.Add(instance);
 
-        instance.Ready();
-
         return instance;
     }
 
@@ -46,6 +44,7 @@ internal class GameObjectManager
         foreach (var tba in _toBeAdded)
         {
             GameObjects.Add(tba);
+            tba.Ready();
         }
         _toBeRemoved = [];
         _toBeAdded = [];

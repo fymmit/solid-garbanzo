@@ -1,11 +1,11 @@
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
-using Game.GameObjects.Traits;
+using Game.Traits;
 
 namespace Game.GameObjects;
 
-internal class Enemy : GameObject, IHarmful
+public class Enemy : GameObject, IHarmful
 {
     private float _speed = 10f;
 
@@ -23,7 +23,7 @@ internal class Enemy : GameObject, IHarmful
         ];
     }
 
-    internal override void Ready()
+    public override void Ready()
     {
         Console.WriteLine("Enemy ready.");
     }

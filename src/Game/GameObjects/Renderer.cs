@@ -1,6 +1,6 @@
 using System.Numerics;
 using Raylib_cs;
-using Game.GameObjects.Traits;
+using Game.Traits;
 
 namespace Game.GameObjects;
 

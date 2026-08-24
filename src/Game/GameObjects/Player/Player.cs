@@ -2,7 +2,7 @@ using Raylib_cs;
 
 namespace Game.GameObjects.Player;
 
-internal class Player : GameObject
+public class Player : GameObject
 {
     public Player()
     {
@@ -14,7 +14,7 @@ internal class Player : GameObject
         ];
     }
 
-    internal override void Ready()
+    public override void Ready()
     {
         Console.WriteLine("Player ready.");
     }

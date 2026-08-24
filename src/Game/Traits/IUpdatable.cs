@@ -1,4 +1,4 @@
-namespace Game.GameObjects.Traits;
+namespace Game.Traits;
 
 interface IUpdatable
 {

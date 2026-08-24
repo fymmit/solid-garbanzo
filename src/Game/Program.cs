@@ -4,14 +4,16 @@ using static Raylib_cs.Raylib;
 using Game.GameObjects;
 using Game.GameObjects.Player;
 using Game.Events;
-using Game.GameObjects.Traits;
+using Game.Traits;
 
 internal class Program
 {
     internal static GameObjectManager GameObjectManager = new GameObjectManager();
-    private static Camera2D _camera;
+    internal static Camera2D Camera;
     private static Texture2D _texture;
     private static Player? _player;
+
+    private static bool _isDebug;
 
     [STAThread]
     private static void Main(string[] args)
@@ -33,10 +35,12 @@ internal class Program
         _player = GameObjectManager.Create<Player>(position);
         GameObjectManager.Create<Enemy>(position2);
 
-        _camera = new();
-        _camera.Target = _player.Position;
-        _camera.Offset = new(windowWidth / 2, windowHeight / 2);
-        _camera.Zoom = 1f;
+        Camera = new();
+        Camera.Target = _player.Position;
+        Camera.Offset = new(windowWidth / 2, windowHeight / 2);
+        Camera.Zoom = 1f;
+
+        _isDebug = false;
 
         while (!WindowShouldClose())
         {
@@ -61,7 +65,12 @@ internal class Program
             }
         }
 
-        _camera.Target = _player?.Position ?? new();
+        if (IsKeyPressed(KeyboardKey.P))
+        {
+            _isDebug = !_isDebug;
+        }
+
+        Camera.Target = _player?.Position ?? new();
 
         UpdateEventChannel.InvokeUpdateLoopFinishedEvent();
     }
@@ -70,7 +79,7 @@ internal class Program
     {
         BeginDrawing();
 
-        BeginMode2D(_camera);
+        BeginMode2D(Camera);
 
         ClearBackground(Color.White);
         DrawTexture(_texture, 0, 0, Color.White);
@@ -84,7 +93,22 @@ internal class Program
 
         foreach (var go in GameObjectManager.GameObjects)
         {
-            go.GetComponent<IRenderable>()?.Render();
+            foreach (var renderable in go.GetComponents<IRenderable>())
+            {
+                renderable.Render();
+            }
+        }
+
+        if (_isDebug)
+        {
+            foreach (var go in GameObjectManager.GameObjects)
+            {
+                go.DebugRender();
+                foreach (var debugRenderable in go.GetComponents<IDebugRenderable>())
+                {
+                    debugRenderable.DebugRender();
+                }
+            }
         }
 
         EndMode2D();

@@ -1,9 +1,9 @@
 using System.Numerics;
-using Game.GameObjects.Traits;
+using Game.Traits;
 
 namespace Game.GameObjects;
 
-public class GameObject : IUpdatable
+public class GameObject : IUpdatable, IDebugRenderable
 {
     public IComposable[] Components { get; protected set; }
     public Vector2 Position { get; set; }
@@ -14,9 +14,11 @@ public class GameObject : IUpdatable
         Position = new();
     }
 
-    internal virtual void Ready() { }
+    public virtual void Ready() { }
 
     public virtual void Update(float delta) { }
+
+    public virtual void DebugRender() { }
 
     internal T? GetComponent<T>()
     {
@@ -28,4 +30,5 @@ public class GameObject : IUpdatable
         return Components.OfType<T>();
     }
 }
+
 

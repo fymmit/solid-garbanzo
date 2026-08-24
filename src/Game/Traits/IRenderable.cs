@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace Game.GameObjects.Traits;
+namespace Game.Traits;
 
 internal interface IRenderable
 {

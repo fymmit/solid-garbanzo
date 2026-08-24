@@ -1,4 +1,4 @@
-using Game.GameObjects.Traits;
+using Game.Traits;
 using Game.Events;
 
 namespace Game.GameObjects.Player;
