@@ -20,14 +20,23 @@ public class GameObject : IUpdatable, IDebugRenderable
 
     public virtual void DebugRender() { }
 
-    internal T? GetComponent<T>()
-    {
-        return Components.OfType<T>().FirstOrDefault();
-    }
-
     internal IEnumerable<T> GetComponents<T>()
     {
         return Components.OfType<T>();
+    }
+
+    internal T? GetComponent<T>()
+    {
+        if (this is T component)
+        {
+            return component;
+        }
+        return GetComponents<T>().FirstOrDefault();
+    }
+
+    protected void Destroy()
+    {
+        GameObjectManager.Remove(this);
     }
 }
 
