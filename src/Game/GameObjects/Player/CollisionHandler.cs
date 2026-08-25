@@ -7,7 +7,7 @@ internal class CollisionHandler(GameObject parent) : IComposable, IUpdatable
 {
     public GameObject Parent => parent;
 
-    private float _hitboxRadius;
+    private float _hitboxRadius = 32f;
 
     public void Update(float delta)
     {

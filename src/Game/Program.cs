@@ -5,12 +5,14 @@ using Game.GameObjects;
 using Game.GameObjects.Player;
 using Game.Events;
 using Game.Traits;
+using Game.UI;
 
 internal class Program
 {
     internal static Camera2D Camera;
     private static Texture2D _texture;
     private static Player? _player;
+    private static HUD _hud = new();
 
     private static bool _isDebug;
 
@@ -110,6 +112,8 @@ internal class Program
                 }
             }
         }
+
+        _hud?.Render();
 
         EndMode2D();
 

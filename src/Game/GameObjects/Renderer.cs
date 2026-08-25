@@ -1,4 +1,3 @@
-using System.Numerics;
 using Raylib_cs;
 using Game.Traits;
 
@@ -7,7 +6,6 @@ namespace Game.GameObjects;
 public class Renderer : IComposable, IRenderable
 {
     public GameObject Parent => _parent;
-    public Vector2 Position => _parent.Position;
 
     private GameObject _parent;
     private Color _color;
@@ -26,11 +24,11 @@ public class Renderer : IComposable, IRenderable
     {
         if (_shape == Shape.Circle)
         {
-            Raylib.DrawCircle((int)Position.X, (int)Position.Y, _radius, _color);
+            Raylib.DrawCircle((int)_parent.Position.X, (int)_parent.Position.Y, _radius, _color);
         }
         else if (_shape == Shape.Triangle)
         {
-            Raylib.DrawPoly(Position, 3, _radius, 0, _color);
+            Raylib.DrawPoly(_parent.Position, 3, _radius, 0, _color);
         }
     }
 }
