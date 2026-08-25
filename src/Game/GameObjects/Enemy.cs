@@ -4,7 +4,7 @@ using Game.Traits;
 
 namespace Game.GameObjects;
 
-public class Enemy : GameObject, IHarmful
+public class Enemy : GameObject, IHarmful, IDamageable
 {
     private float _speed = 10f;
 
@@ -39,6 +39,11 @@ public class Enemy : GameObject, IHarmful
             direction /= direction.Length();
         }
         Position += direction * delta * _speed;
+    }
+
+    public void TakeDamage(int amount)
+    {
+        Console.WriteLine("Enemy TakeDamage()");
     }
 }
 
