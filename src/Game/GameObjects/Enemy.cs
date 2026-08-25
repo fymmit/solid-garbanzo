@@ -27,7 +27,7 @@ public class Enemy : GameObject, IHarmful
     public override void Ready()
     {
         Console.WriteLine("Enemy ready.");
-        _player = Program.GameObjectManager.GameObjects.OfType<Player.Player>().FirstOrDefault();
+        _player = GameObjectManager.GameObjects.OfType<Player.Player>().FirstOrDefault();
     }
 
     public override void Update(float delta)

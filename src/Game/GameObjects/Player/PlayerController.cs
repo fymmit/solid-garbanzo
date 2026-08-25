@@ -26,7 +26,7 @@ internal class PlayerController(GameObject parent) : IComposable, IUpdatable
         if (IsMouseButtonPressed(MouseButton.Left))
         {
             var direction = mousePos - Parent.Position;
-            var bullet = Program.GameObjectManager.Create<Bullet>(Parent.Position);
+            var bullet = GameObjectManager.Create<Bullet>(Parent.Position);
             bullet.SetDirection(direction);
         }
     }

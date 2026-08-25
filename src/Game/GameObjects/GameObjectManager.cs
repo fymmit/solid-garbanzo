@@ -3,18 +3,18 @@ using Game.Events;
 
 namespace Game.GameObjects;
 
-internal class GameObjectManager
+internal static class GameObjectManager
 {
-    internal List<GameObject> GameObjects { get; private set; } = [];
-    private List<GameObject> _toBeAdded = [];
-    private List<GameObject> _toBeRemoved = [];
+    internal static List<GameObject> GameObjects { get; private set; } = [];
+    private static List<GameObject> _toBeAdded = [];
+    private static List<GameObject> _toBeRemoved = [];
 
-    internal GameObjectManager()
+    internal static void Setup()
     {
         UpdateEventChannel.UpdateLoopStartedEvent += OnUpdateLoopStarted;
     }
 
-    internal T Create<T>() where T : GameObject, new()
+    internal static T Create<T>() where T : GameObject, new()
     {
         var instance = new T();
         _toBeAdded.Add(instance);
@@ -22,7 +22,7 @@ internal class GameObjectManager
         return instance;
     }
 
-    internal T Create<T>(Vector2 position) where T : GameObject, new()
+    internal static T Create<T>(Vector2 position) where T : GameObject, new()
     {
         var instance = Create<T>();
         instance.Position = position;
@@ -30,12 +30,12 @@ internal class GameObjectManager
         return instance;
     }
 
-    internal void Remove(GameObject gameObject)
+    internal static void Remove(GameObject gameObject)
     {
         _toBeRemoved.Add(gameObject);
     }
 
-    void OnUpdateLoopStarted()
+    private static void OnUpdateLoopStarted()
     {
         foreach (var tbr in _toBeRemoved)
         {

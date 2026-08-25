@@ -10,7 +10,7 @@ internal class PlayerDamageHandler(GameObject parent) : IComposable, IDamageable
     public void TakeDamage(int damage)
     {
         DamageEventChannel.InvokeDamageEvent(damage);
-        Program.GameObjectManager.Remove(Parent);
+        GameObjectManager.Remove(Parent);
     }
 }
 

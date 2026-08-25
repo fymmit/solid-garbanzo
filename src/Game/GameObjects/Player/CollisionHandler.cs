@@ -11,7 +11,7 @@ internal class CollisionHandler(GameObject parent) : IComposable, IUpdatable
 
     public void Update(float delta)
     {
-        var harmfuls = Program.GameObjectManager.GameObjects.Where(go => go is IHarmful);
+        var harmfuls = GameObjectManager.GameObjects.Where(go => go is IHarmful);
         foreach (var go in harmfuls)
         {
             var harmful = (IHarmful)go;

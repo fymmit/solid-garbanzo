@@ -8,7 +8,6 @@ using Game.Traits;
 
 internal class Program
 {
-    internal static GameObjectManager GameObjectManager = new GameObjectManager();
     internal static Camera2D Camera;
     private static Texture2D _texture;
     private static Player? _player;
@@ -18,6 +17,7 @@ internal class Program
     [STAThread]
     private static void Main(string[] args)
     {
+        GameObjectManager.Setup();
         DamageEventChannel.DamageEvent += OnDamage;
 
         var windowWidth = 800;
