@@ -7,6 +7,7 @@ public class GameObject : IUpdatable, IDebugRenderable
 {
     public IComposable[] Components { get; protected set; }
     public Vector2 Position { get; set; }
+    public float Rotation { get; set; }
 
     internal GameObject()
     {
@@ -34,7 +35,7 @@ public class GameObject : IUpdatable, IDebugRenderable
         return GetComponents<T>().FirstOrDefault();
     }
 
-    protected void Destroy()
+    public void Destroy()
     {
         GameObjectManager.Remove(this);
     }

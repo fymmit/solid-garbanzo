@@ -1,13 +1,15 @@
+using Game.Traits;
+
 namespace Game.Events;
 
 public static class DamageEventChannel
 {
-    public static event Action<int>? DamageEvent;
+    public static event Action<IDamageable, int>? DamageEvent;
 
-    public static void InvokeDamageEvent(int damage)
+    public static void InvokeDamageEvent(IDamageable target, int damage)
     {
-        DamageEvent?.Invoke(damage);
-        Console.WriteLine($"Damage event invoked with {damage} damage");
+        DamageEvent?.Invoke(target, damage);
+        Console.WriteLine($"Damage event invoked for {target} with {damage} damage");
     }
 }
 

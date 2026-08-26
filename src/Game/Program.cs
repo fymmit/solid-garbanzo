@@ -20,7 +20,6 @@ internal class Program
     private static void Main(string[] args)
     {
         GameObjectManager.Setup();
-        DamageEventChannel.DamageEvent += OnDamage;
 
         var windowWidth = 800;
         var windowHeight = 480;
@@ -58,6 +57,10 @@ internal class Program
         UpdateEventChannel.InvokeUpdateLoopStartedEvent();
 
         var delta = GetFrameTime();
+
+        // TODO: raise Update event and have all Behaviours (class with the Update method) listen to the event
+        UpdateEventChannel.InvokeUpdateEvent(delta);
+
         foreach (var go in GameObjectManager.GameObjects)
         {
             go.Update(delta);
@@ -95,6 +98,7 @@ internal class Program
 
         foreach (var go in GameObjectManager.GameObjects)
         {
+            // go.Renderer?.Render();
             foreach (var renderable in go.GetComponents<IRenderable>())
             {
                 renderable.Render();
@@ -118,11 +122,6 @@ internal class Program
         EndMode2D();
 
         EndDrawing();
-    }
-
-    private static void OnDamage(int damage)
-    {
-        Console.WriteLine($"OnDamage: {damage}");
     }
 }
 

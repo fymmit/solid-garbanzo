@@ -13,7 +13,9 @@ public class Enemy : GameObject, IHarmful, IDamageable
 
     public Vector2 ColliderPosition => Position;
     public float ColliderRadius => _radius;
-    public int Damage => 5;
+    public int Damage => 1;
+
+    public int Health => 10;
 
     private Player.Player? _player;
 
