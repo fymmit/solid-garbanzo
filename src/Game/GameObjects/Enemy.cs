@@ -4,43 +4,48 @@ using Game.Traits;
 
 namespace Game.GameObjects;
 
-public class Enemy : GameObject, IHarmful, IDamageable
+public class Enemy : GameObject
+{
+    public Enemy()
+    {
+        Components = [
+            Attach<EnemyBehaviour>()
+        ];
+
+        Renderer = new Renderer(this, Color.Red, 24f, Shape.Triangle);
+    }
+}
+
+public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
 {
     private float _speed = 10f;
 
     private Color _color = Color.Red;
     private float _radius = 16f;
 
-    public Vector2 ColliderPosition => Position;
+    public Vector2 ColliderPosition => Parent!.Position;
     public float ColliderRadius => _radius;
-    public int Damage => 1;
+    public int Damage => 10;
 
     public int Health => 10;
 
-    private Player.Player? _player;
-
-    public Enemy()
-    {
-        Components = [
-            new Renderer(this, Color.Red, 24f, Shape.Triangle)
-        ];
-    }
-
-    public override void Ready()
-    {
-        Console.WriteLine("Enemy ready.");
-        _player = GameObjectManager.GameObjects.OfType<Player.Player>().FirstOrDefault();
-    }
+    private Player.Player? _target;
 
     public override void Update(float delta)
     {
-        var direction = Vector2.UnitX;
-        if (_player is not null)
+        if (Parent is null) return;
+        if (_target is null)
         {
-            direction = _player.Position - Position;
+            _target = GameObjectManager.GameObjects.OfType<Player.Player>().FirstOrDefault();
+        }
+
+        var direction = Vector2.Zero;
+        if (_target is not null)
+        {
+            direction = _target.Position - Parent.Position;
             direction /= direction.Length();
         }
-        Position += direction * delta * _speed;
+        Parent.Position += direction * delta * _speed;
     }
 
     public void TakeDamage(int amount)

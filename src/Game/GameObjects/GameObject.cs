@@ -3,9 +3,11 @@ using Game.Traits;
 
 namespace Game.GameObjects;
 
-public class GameObject : IUpdatable, IDebugRenderable
+public class GameObject : IDebugRenderable
 {
-    public IComposable[] Components { get; protected set; }
+    public Behaviour[] Components { get; protected set; }
+    public Renderer? Renderer { get; protected set; }
+
     public Vector2 Position { get; set; }
     public float Rotation { get; set; }
 
@@ -14,10 +16,6 @@ public class GameObject : IUpdatable, IDebugRenderable
         Components = [];
         Position = new();
     }
-
-    public virtual void Ready() { }
-
-    public virtual void Update(float delta) { }
 
     public virtual void DebugRender() { }
 
@@ -28,17 +26,23 @@ public class GameObject : IUpdatable, IDebugRenderable
 
     internal T? GetComponent<T>()
     {
-        if (this is T component)
-        {
-            return component;
-        }
         return GetComponents<T>().FirstOrDefault();
     }
 
     public void Destroy()
     {
+        foreach (var behaviour in Components)
+        {
+            behaviour.Destroy();
+        }
         GameObjectManager.Remove(this);
     }
-}
 
+    protected Behaviour Attach<T>() where T : Behaviour, new()
+    {
+        var behaviour = new T();
+        behaviour.Initialize(this);
+        return behaviour;
+    }
+}
 

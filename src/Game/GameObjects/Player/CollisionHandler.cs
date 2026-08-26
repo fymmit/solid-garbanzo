@@ -3,18 +3,19 @@ using Game.Traits;
 
 namespace Game.GameObjects.Player;
 
-internal class CollisionHandler(GameObject parent) : IComposable, IUpdatable
+internal class CollisionHandler : Behaviour
 {
-    public GameObject Parent => parent;
-
     private float _hitboxRadius = 32f;
 
-    public void Update(float delta)
+    public override void Update(float delta)
     {
-        var harmfuls = GameObjectManager.GameObjects.Where(go => go is IHarmful);
+        if (Parent is null) return;
+
+        var harmfuls = GameObjectManager.GameObjects.Where(go => go.GetComponent<IHarmful>() is not null);
         foreach (var go in harmfuls)
         {
-            var harmful = (IHarmful)go;
+            var harmful = go.GetComponent<IHarmful>();
+            if (harmful is null) continue;
             if (CheckCollisionCircles(Parent.Position, _hitboxRadius, harmful.ColliderPosition, harmful.ColliderRadius))
             {
                 Parent.GetComponent<IDamageable>()?.TakeDamage(harmful.Damage);
@@ -22,5 +23,4 @@ internal class CollisionHandler(GameObject parent) : IComposable, IUpdatable
         }
     }
 }
-
 

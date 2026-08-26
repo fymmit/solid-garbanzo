@@ -58,17 +58,7 @@ internal class Program
 
         var delta = GetFrameTime();
 
-        // TODO: raise Update event and have all Behaviours (class with the Update method) listen to the event
         UpdateEventChannel.InvokeUpdateEvent(delta);
-
-        foreach (var go in GameObjectManager.GameObjects)
-        {
-            go.Update(delta);
-            foreach (var updatable in go.GetComponents<IUpdatable>())
-            {
-                updatable.Update(delta);
-            }
-        }
 
         if (IsKeyPressed(KeyboardKey.P))
         {
@@ -98,11 +88,7 @@ internal class Program
 
         foreach (var go in GameObjectManager.GameObjects)
         {
-            // go.Renderer?.Render();
-            foreach (var renderable in go.GetComponents<IRenderable>())
-            {
-                renderable.Render();
-            }
+            go.Renderer?.Render();
         }
 
         if (_isDebug)

@@ -44,7 +44,6 @@ internal static class GameObjectManager
         foreach (var tba in _toBeAdded)
         {
             GameObjects.Add(tba);
-            tba.Ready();
         }
         _toBeRemoved = [];
         _toBeAdded = [];

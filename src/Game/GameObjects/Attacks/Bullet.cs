@@ -6,41 +6,43 @@ namespace Game.GameObjects.Attacks;
 
 public class Bullet : GameObject
 {
+    public Bullet()
+    {
+        Components = [
+            Attach<BulletBehaviour>()
+        ];
+        Renderer = new Renderer(this, Raylib_cs.Color.Magenta, 12f, Shape.Circle);
+    }
+}
+
+public class BulletBehaviour : Behaviour
+{
     public Vector2 Direction
     {
         get; set
         {
-            field = value / value.Length();
+            field = Vector2.Normalize(value);
         }
     }
+
     private float _speed = 50f;
-
-    public void SetDirection(Vector2 direction)
-    {
-        Direction = direction / direction.Length();
-    }
-
-    public Bullet()
-    {
-        Components = [
-            new Renderer(this, Raylib_cs.Color.Magenta, 12f, Shape.Circle)
-        ];
-    }
-
-    public override void Ready() { }
 
     public override void Update(float delta)
     {
-        Position += Direction * _speed * delta;
+        if (Parent is null) return;
+
+        Parent.Position += Direction * _speed * delta;
         var enemies = GameObjectManager.GameObjects.Where(go => go is Enemy);
         foreach (var go in enemies)
         {
             var enemy = (Enemy)go;
-            if (Raylib.CheckCollisionCircles(Position, 12f, enemy.ColliderPosition, enemy.ColliderRadius))
+            var enemyCollider = enemy.GetComponent<ICollidable>();
+            if (enemyCollider is null) continue;
+            if (Raylib.CheckCollisionCircles(Parent.Position, 12f, enemyCollider.ColliderPosition, enemyCollider.ColliderRadius))
             {
                 Console.WriteLine("Bullet hit enemy");
-                enemy.GetComponent<IDamageable>()?.TakeDamage(enemy.Damage);
-                Destroy();
+                enemy.GetComponent<IDamageable>()?.TakeDamage(10);
+                Parent.Destroy();
             }
         }
     }

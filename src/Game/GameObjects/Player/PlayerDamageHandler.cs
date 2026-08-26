@@ -3,9 +3,8 @@ using Game.Events;
 
 namespace Game.GameObjects.Player;
 
-internal class PlayerDamageHandler(GameObject parent) : IComposable, IDamageable, IUpdatable
+internal class PlayerDamageHandler : Behaviour, IDamageable
 {
-    public GameObject Parent => parent;
     public int Health { get; private set; } = 100;
 
     private float _invulnTime = 0;
@@ -21,13 +20,15 @@ internal class PlayerDamageHandler(GameObject parent) : IComposable, IDamageable
             _canTakeDamage = false;
             if (Health <= 0)
             {
-                Parent.Destroy();
+                Parent?.Destroy();
             }
         }
     }
 
-    public void Update(float delta)
+    public override void Update(float delta)
     {
+        if (Parent is null) return;
+
         if (!_canTakeDamage && _invulnTime > 0)
         {
             _invulnTime -= delta;
