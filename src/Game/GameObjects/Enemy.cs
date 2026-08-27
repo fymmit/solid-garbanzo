@@ -47,8 +47,11 @@ public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
 
     public void TakeDamage(int amount)
     {
-        Console.WriteLine("Enemy TakeDamage()");
         Health -= amount;
+        if (Health <= 0)
+        {
+            Parent?.Destroy();
+        }
     }
 }
 
