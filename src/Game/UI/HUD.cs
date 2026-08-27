@@ -1,6 +1,8 @@
 using Raylib_cs;
 using Game.Traits;
 using Game.Events;
+using Game.GameObjects;
+using Game.GameObjects.Player;
 
 namespace Game.UI;
 
@@ -15,18 +17,22 @@ public class HUD : IRenderable, IUpdatable
 
     public void Render()
     {
-        var position = Raylib.GetScreenToWorld2D(new System.Numerics.Vector2(10, 10), Program.Camera);
-        Raylib.DrawRectangle((int)position.X, (int)position.Y, 160, 40, Color.Black);
-        Raylib.DrawText("HUD", (int)position.X + 4, (int)position.Y + 4, 16, Color.White);
+        // TODO: fix all these numbers
+        Raylib.DrawRectangle(10, 10, 160, 40, Color.Black);
+        Raylib.DrawText("HUD", 10 + 4, 10 + 4, 16, Color.White);
+
+        // some sort of health bar
+        Raylib.DrawRectangle(10 - 2, 80 - 2, 104, 44, Color.Black);
+        Raylib.DrawRectangle(10, 80, _healthBarPercentage, 40, Color.Red);
     }
 
     public void Update(float delta) { }
 
-    private void OnDamage(IDamageable target, int amount)
+    private void OnDamage(GameObject? target, int amount)
     {
-        // FIX: this doesn't work because IDamageable is not IComposable so it doesn't have access to the parent element
-        // the component system needs to be resigned
-
-        // var player = target.Parent;
+        if (target is Player)
+        {
+            _healthBarPercentage -= amount;
+        }
     }
 }

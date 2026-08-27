@@ -24,7 +24,7 @@ public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
     public float ColliderRadius => _radius;
     public int Damage => 10;
 
-    public int Health => 10;
+    public int Health { get; private set; } = 10;
 
     private Player.Player? _target;
 
@@ -48,6 +48,7 @@ public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
     public void TakeDamage(int amount)
     {
         Console.WriteLine("Enemy TakeDamage()");
+        Health -= amount;
     }
 }
 

@@ -103,9 +103,9 @@ internal class Program
             }
         }
 
-        _hud?.Render();
-
         EndMode2D();
+
+        _hud?.Render();
 
         EndDrawing();
     }
