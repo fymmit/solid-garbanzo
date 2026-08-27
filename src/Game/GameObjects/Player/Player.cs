@@ -6,11 +6,9 @@ public class Player : GameObject
 {
     public Player()
     {
-        Components = [
-            Attach<PlayerController>(),
-            Attach<CollisionHandler>(),
-            Attach<PlayerDamageHandler>()
-        ];
+        Attach<PlayerController>();
+        Attach<CollisionHandler>();
+        Attach<PlayerDamageHandler>();
         Renderer = new Renderer(this, Color.Blue, 32f, Shape.Circle);
     }
 }

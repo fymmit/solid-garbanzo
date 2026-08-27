@@ -5,7 +5,7 @@ namespace Game.GameObjects;
 
 public class GameObject : IDebugRenderable
 {
-    public Behaviour[] Components { get; protected set; }
+    public List<Behaviour> Components { get; } = [];
     public Renderer? Renderer { get; protected set; }
 
     public Vector2 Position { get; set; }
@@ -13,7 +13,6 @@ public class GameObject : IDebugRenderable
 
     internal GameObject()
     {
-        Components = [];
         Position = new();
     }
 
@@ -38,11 +37,11 @@ public class GameObject : IDebugRenderable
         GameObjectManager.Remove(this);
     }
 
-    protected Behaviour Attach<T>() where T : Behaviour, new()
+    protected void Attach<T>() where T : Behaviour, new()
     {
         var behaviour = new T();
         behaviour.Initialize(this);
-        return behaviour;
+        Components.Add(behaviour);
     }
 }
 

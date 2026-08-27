@@ -8,10 +8,7 @@ public class Enemy : GameObject
 {
     public Enemy()
     {
-        Components = [
-            Attach<EnemyBehaviour>()
-        ];
-
+        Attach<EnemyBehaviour>();
         Renderer = new Renderer(this, Color.Red, 24f, Shape.Triangle);
     }
 }

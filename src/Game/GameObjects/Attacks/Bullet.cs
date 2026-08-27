@@ -8,9 +8,7 @@ public class Bullet : GameObject
 {
     public Bullet()
     {
-        Components = [
-            Attach<BulletBehaviour>()
-        ];
+        Attach<BulletBehaviour>();
         Renderer = new Renderer(this, Raylib_cs.Color.Magenta, 12f, Shape.Circle);
     }
 }
