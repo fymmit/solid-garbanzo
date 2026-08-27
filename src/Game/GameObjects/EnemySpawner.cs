@@ -1,0 +1,57 @@
+using System.Numerics;
+
+namespace Game.GameObjects;
+
+public class EnemySpawner : GameObject
+{
+    public EnemySpawner()
+    {
+        Attach<EnemySpawnerBehaviour>();
+    }
+}
+
+public class EnemySpawnerBehaviour : Behaviour
+{
+    private const float SPAWN_TIMER = 2f;
+    private float _timeSinceLastSpawn = 0f;
+
+    private GameObject? _player;
+    private int _minRange = 600;
+    private int _maxRange = 1000;
+
+    public override void Ready()
+    {
+        _player = GameObjectManager.GameObjects.OfType<Player.Player>().FirstOrDefault();
+    }
+
+    public override void Update(float delta)
+    {
+        _timeSinceLastSpawn -= delta;
+        if (_timeSinceLastSpawn <= 0)
+        {
+            SpawnEnemy();
+            _timeSinceLastSpawn = SPAWN_TIMER;
+        }
+    }
+
+    void SpawnEnemy()
+    {
+        var random = new Random();
+        float x = random.Next(_minRange, _maxRange);
+        float y = random.Next(_minRange, _maxRange);
+        if (random.Next(0, 2) is 0)
+        {
+            x = -x;
+        }
+        if (random.Next(0, 2) is 0)
+        {
+            y = -y;
+        }
+        if (_player is not null)
+        {
+            x += _player.Position.X;
+            y += _player.Position.Y;
+        }
+        GameObjectManager.Create<Enemy>(new Vector2(x, y));
+    }
+}

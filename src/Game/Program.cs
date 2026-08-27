@@ -32,9 +32,9 @@ internal class Program
         _texture = LoadTextureFromImage(image);
 
         Vector2 position = new((float)windowWidth / 2, (float)windowHeight / 2);
-        Vector2 position2 = new((float)windowWidth / 3, (float)windowHeight / 3);
         _player = GameObjectManager.Create<Player>(position);
-        GameObjectManager.Create<Enemy>(position2);
+
+        GameObjectManager.Create<EnemySpawner>();
 
         Camera = new();
         Camera.Target = _player.Position;
