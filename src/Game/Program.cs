@@ -19,6 +19,18 @@ internal class Program
     [STAThread]
     private static void Main(string[] args)
     {
+        Initialize();
+
+        while (!WindowShouldClose())
+        {
+            UpdateFrame();
+        }
+
+        CloseWindow();
+    }
+
+    internal static void Initialize()
+    {
         GameObjectManager.Setup();
 
         var windowWidth = 800;
@@ -42,14 +54,12 @@ internal class Program
         Camera.Zoom = 1f;
 
         _isDebug = false;
+    }
 
-        while (!WindowShouldClose())
-        {
-            Update();
-            Draw();
-        }
-
-        CloseWindow();
+    internal static void UpdateFrame()
+    {
+        Update();
+        Draw();
     }
 
     private static void Update()
@@ -110,4 +120,3 @@ internal class Program
         EndDrawing();
     }
 }
-

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>solid-garbanzo</title>
+    <style>
+        html, body { min-height: 100%; }
+        body {
+            align-items: center;
+            background: #16191f;
+            color: #e7edf5;
+            display: flex;
+            font-family: system-ui, sans-serif;
+            justify-content: center;
+            margin: 0;
+        }
+        main { padding: 1rem; text-align: center; }
+        canvas {
+            background: #000;
+            border: 1px solid #3f4b5b;
+            display: block;
+            height: auto;
+            max-height: calc(100vh - 6rem);
+            max-width: calc(100vw - 2rem);
+            outline: none;
+            width: 800px;
+        }
+        #status { margin: .75rem 0 0; }
+        .error { color: #ff9d9d; }
+    </style>
+</head>
+<body>
+    <main>
+        <canvas id="game" width="800" height="480" tabindex="0" aria-label="solid-garbanzo game"></canvas>
+        <p id="status">Loading game...</p>
+    </main>
+    <script type="module" src="./main.js"></script>
+</body>
+</html>
