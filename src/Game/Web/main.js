@@ -19,15 +19,8 @@ try {
     status.hidden = true;
     canvas.focus();
 
-    let nextFrameTime = 0;
-    function frame(timestamp) {
+    function frame() {
         requestAnimationFrame(frame);
-
-        if (timestamp < nextFrameTime) {
-            return;
-        }
-
-        nextFrameTime = Math.max(nextFrameTime + 1000 / 60, timestamp);
         host.UpdateFrame();
     }
 

@@ -23,6 +23,7 @@
     <EmccCompileOptimizationFlag>-O0</EmccCompileOptimizationFlag>
     <WasmNativeStrip>false</WasmNativeStrip>
     <WasmEmitSymbolMap>false</WasmEmitSymbolMap>
+    <DefineConstants>$(DefineConstants);BROWSER_WASM</DefineConstants>
     <NoWarn>$(NoWarn);CA1416</NoWarn>
   </PropertyGroup>
 

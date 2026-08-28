@@ -38,7 +38,9 @@ internal class Program
 
         InitWindow(windowWidth, windowHeight, "solid-garbanzo");
 
+#if !BROWSER_WASM
         SetTargetFPS(60);
+#endif
 
         var image = GenImageChecked(1000, 1000, 32, 32, Color.DarkGray, Color.LightGray);
         _texture = LoadTextureFromImage(image);
