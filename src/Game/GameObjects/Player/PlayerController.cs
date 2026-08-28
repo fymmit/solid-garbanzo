@@ -22,6 +22,11 @@ internal class PlayerController : Behaviour
         if (IsKeyDown(KeyboardKey.W)) movement.Y += -1;
         if (IsKeyDown(KeyboardKey.S)) movement.Y += 1;
 
+        if (movement != Vector2.Zero)
+        {
+            movement = Vector2.Normalize(movement);
+        }
+
         Parent.Position += movement * delta * _speed;
 
         var mousePos = GetScreenToWorld2D(GetMousePosition(), Program.Camera);
