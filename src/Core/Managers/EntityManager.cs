@@ -1,20 +1,13 @@
 using System.Numerics;
-using Core.Events;
 
 namespace Core;
 
-public static class EntityManager
+public class EntityManager
 {
-    public static List<Entity> Entities { get; private set; } = [];
-    private static List<Entity> _toBeAdded = [];
-    private static List<Entity> _toBeRemoved = [];
+    public List<Entity> Entities { get; private set; } = [];
+    private List<Entity> _toBeAdded = [];
 
-    public static void Setup()
-    {
-        UpdateEventChannel.UpdateLoopStartedEvent += OnUpdateLoopStarted;
-    }
-
-    public static T Create<T>() where T : Entity, new()
+    public T Create<T>() where T : Entity, new()
     {
         var instance = new T();
         _toBeAdded.Add(instance);
@@ -22,7 +15,7 @@ public static class EntityManager
         return instance;
     }
 
-    public static T Create<T>(Vector2 position) where T : Entity, new()
+    public T Create<T>(Vector2 position) where T : Entity, new()
     {
         var instance = Create<T>();
         instance.Position = position;
@@ -30,24 +23,14 @@ public static class EntityManager
         return instance;
     }
 
-    internal static void Remove(Entity gameObject)
-    {
-        _toBeRemoved.Add(gameObject);
-    }
-
-    public static IEnumerable<T> Find<T>() where T : Entity
+    public IEnumerable<T> Find<T>() where T : Entity
     {
         return Entities.OfType<T>();
     }
 
-    private static void OnUpdateLoopStarted()
+    public void ProcessPendingEntities()
     {
-        var pendingRemovals = _toBeRemoved;
-        _toBeRemoved = [];
-        foreach (var entity in pendingRemovals)
-        {
-            Entities.Remove(entity);
-        }
+        Entities.RemoveAll(e => e.IsMarkedForDestruction);
 
         var pendingAdditions = _toBeAdded;
         _toBeAdded = [];
@@ -57,7 +40,7 @@ public static class EntityManager
         }
         foreach (var entity in pendingAdditions)
         {
-            entity.Activate();
+            entity.Activate(this);
         }
     }
 }

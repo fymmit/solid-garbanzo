@@ -92,7 +92,7 @@ internal static class Program
         DrawRectangle((int)rec2.X, (int)rec2.Y, (int)rec2.Width, (int)rec2.Height, Color.Yellow);
         DrawRectangle((int)rec3.X, (int)rec3.Y, (int)rec3.Width, (int)rec3.Height, Color.Orange);
 
-        foreach (var entity in EntityManager.Entities)
+        foreach (var entity in Game.Entities)
         {
             DrawEntity(entity);
         }

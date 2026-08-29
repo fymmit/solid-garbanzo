@@ -25,7 +25,7 @@ public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
 
     public override void Ready()
     {
-        _target = EntityManager.Find<Player>().FirstOrDefault();
+        _target = _entityManager.Find<Player>().FirstOrDefault();
     }
 
     public override void Update(float delta)

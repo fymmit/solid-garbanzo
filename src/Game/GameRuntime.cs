@@ -1,33 +1,32 @@
 using System.Numerics;
 using Core;
-using Core.Events;
 using UI;
 
 public sealed class GameRuntime
 {
+    private EntityManager _entityManager = new();
     public Player Player { get; private set; } = null!;
     public HUD Hud { get; } = new();
 
+    public IEnumerable<Entity> Entities => _entityManager.Entities;
+
     public void Initialize(Vector2 playerPosition)
     {
-        EntityManager.Setup();
-        Player = EntityManager.Create<Player>(playerPosition);
-        EntityManager.Create<EnemySpawner>();
+        Player = _entityManager.Create<Player>(playerPosition);
+        _entityManager.Create<EnemySpawner>();
     }
 
     public void Update(float delta, GameInput input)
     {
         CurrentInput.Value = input;
-        UpdateEventChannel.InvokeUpdateLoopStartedEvent();
+        _entityManager.ProcessPendingEntities();
 
-        foreach (var entity in EntityManager.Entities)
+        foreach (var entity in _entityManager.Entities)
         {
             foreach (var component in entity.Components)
             {
                 component.Update(delta);
             }
         }
-
-        UpdateEventChannel.InvokeUpdateLoopFinishedEvent();
     }
 }

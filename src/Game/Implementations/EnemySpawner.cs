@@ -20,7 +20,7 @@ public class EnemySpawnerBehaviour : Behaviour
 
     public override void Ready()
     {
-        _player = EntityManager.Find<Player>().FirstOrDefault();
+        _player = _entityManager.Find<Player>().FirstOrDefault();
     }
 
     public override void Update(float delta)
@@ -51,6 +51,6 @@ public class EnemySpawnerBehaviour : Behaviour
             x += _player.Position.X;
             y += _player.Position.Y;
         }
-        EntityManager.Create<Enemy>(new Vector2(x, y));
+        _entityManager.Create<Enemy>(new Vector2(x, y));
     }
 }

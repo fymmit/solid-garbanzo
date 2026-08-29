@@ -19,7 +19,7 @@ internal class PlayerController : Behaviour
         if (CurrentInput.Value.FirePressed)
         {
             var direction = CurrentInput.Value.AimPosition - Parent.Position;
-            var bullet = EntityManager.Create<Bullet>(Parent.Position);
+            var bullet = _entityManager.Create<Bullet>(Parent.Position);
             bullet.GetComponent<BulletBehaviour>()?.Direction = direction;
         }
     }

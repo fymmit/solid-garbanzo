@@ -24,7 +24,7 @@ public class BulletBehaviour : Behaviour
     public override void Update(float delta)
     {
         Parent.Position += Direction * _speed * delta;
-        var enemies = EntityManager.Find<Enemy>();
+        var enemies = _entityManager.Find<Enemy>();
         foreach (var go in enemies)
         {
             var enemy = (Enemy)go;

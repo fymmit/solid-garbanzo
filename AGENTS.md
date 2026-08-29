@@ -13,13 +13,13 @@
 ## Boundaries
 
 - Dependency direction is `RaylibHost -> Game -> Core`. Keep Raylib input, drawing, window, and platform code in `RaylibHost`; `Game` owns rules and entities; `Core` owns the reusable entity/behaviour lifecycle.
-- `GameRuntime` is the host-facing game API. It accepts platform-neutral `GameInput`; do not introduce Raylib types into `Game` or `Core`.
+- `GameRuntime` is the host-facing game API. It owns the per-runtime `EntityManager`, exposes entities for host rendering, and accepts platform-neutral `GameInput`; do not introduce Raylib types into `Game` or `Core`.
 
 ## Lifecycle Gotchas
 
-- `EntityManager.Create` and `Entity.Destroy` queue mutations. Pending removals and additions are applied at the start of the next `GameRuntime.Update`; newly added entities are then activated and their initial behaviours receive `Ready()`.
+- `EntityManager.Create` queues additions, while `Entity.Destroy` marks an entity for deferred removal. Pending removals and additions are processed at the start of the next `GameRuntime.Update`; newly added entities are then activated and their initial behaviours receive `Ready()`.
 - Attach behaviours through `Entity.Attach<T>()`, which sets `Behaviour.Parent` and immediately calls `Ready()` only when the entity is already active. Directly editing `Components` bypasses this lifecycle.
-- `EntityManager` and the update channels are static. `GameRuntime.Initialize` calls `EntityManager.Setup`; repeated initialization in one process would retain global entities/subscriptions and is not currently a supported reset path.
+- `EntityManager` is an instance owned by `GameRuntime`; it is injected into entities and behaviours when they activate. Each `GameRuntime` therefore has isolated entity state, and the old static update event channel is no longer used.
 
 ## Host Targets
 
