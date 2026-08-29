@@ -1,5 +1,3 @@
-using Raylib_cs;
-using static Raylib_cs.Raylib;
 using System.Numerics;
 using Core;
 
@@ -9,11 +7,7 @@ internal class PlayerController : Behaviour
 
     public override void Update(float delta)
     {
-        var movement = new Vector2();
-        if (IsKeyDown(KeyboardKey.A)) movement.X += -1;
-        if (IsKeyDown(KeyboardKey.D)) movement.X += 1;
-        if (IsKeyDown(KeyboardKey.W)) movement.Y += -1;
-        if (IsKeyDown(KeyboardKey.S)) movement.Y += 1;
+        var movement = CurrentInput.Value.Movement;
 
         if (movement != Vector2.Zero)
         {
@@ -22,10 +16,9 @@ internal class PlayerController : Behaviour
 
         Parent.Position += movement * delta * _speed;
 
-        var mousePos = GetScreenToWorld2D(GetMousePosition(), Program.Camera);
-        if (IsMouseButtonPressed(MouseButton.Left))
+        if (CurrentInput.Value.FirePressed)
         {
-            var direction = mousePos - Parent.Position;
+            var direction = CurrentInput.Value.AimPosition - Parent.Position;
             var bullet = EntityManager.Create<Bullet>(Parent.Position);
             bullet.GetComponent<BulletBehaviour>()?.Direction = direction;
         }

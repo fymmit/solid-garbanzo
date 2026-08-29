@@ -5,7 +5,6 @@ namespace Core;
 public abstract class Entity
 {
     public List<Behaviour> Components { get; } = [];
-    public Renderer? Renderer { get; protected set; }
 
     public Vector2 Position { get; set; } = new();
     public float Rotation { get; set; }
@@ -32,4 +31,3 @@ public abstract class Entity
         Components.Add(behaviour);
     }
 }
-

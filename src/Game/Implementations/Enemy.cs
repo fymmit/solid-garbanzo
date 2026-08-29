@@ -1,5 +1,4 @@
 using System.Numerics;
-using Raylib_cs;
 using Core;
 
 public class Enemy : Entity
@@ -7,7 +6,6 @@ public class Enemy : Entity
     public Enemy()
     {
         Attach<EnemyBehaviour>();
-        Renderer = new BaseRenderer(this, Color.Red, 24f, Shape.Triangle);
     }
 }
 
@@ -15,7 +13,6 @@ public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
 {
     private float _speed = 50f;
 
-    private Color _color = Color.Red;
     private float _radius = 16f;
 
     public Vector2 ColliderPosition => Parent!.Position;
@@ -51,4 +48,3 @@ public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
         }
     }
 }
-

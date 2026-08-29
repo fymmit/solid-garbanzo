@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices.JavaScript;
 
-namespace Game.Web;
+namespace RaylibHost.Web;
 
 public partial class Host
 {

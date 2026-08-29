@@ -1,44 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <NativeAot>true</NativeAot>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
-    <SelfContained>true</SelfContained>
-    <StartupObject>Game.Web.Host</StartupObject>
-    <WasmMainJSPath>Web/main.js</WasmMainJSPath>
-    <WasmBuildNative>true</WasmBuildNative>
-    <WasmAllowUndefinedSymbols>true</WasmAllowUndefinedSymbols>
-    <InvariantGlobalization>true</InvariantGlobalization>
-    <WasmInitialHeapSize>67108864</WasmInitialHeapSize>
-    <EmccFlags>$(EmccFlags) -sALLOW_MEMORY_GROWTH=1</EmccFlags>
-    <!-- Work around the Binaryen version bundled with the installed .NET WASM tools. -->
-    <EmccLinkOptimizationFlag>-O0</EmccLinkOptimizationFlag>
-    <EmccCompileOptimizationFlag>-O0</EmccCompileOptimizationFlag>
-    <WasmNativeStrip>false</WasmNativeStrip>
-    <WasmEmitSymbolMap>false</WasmEmitSymbolMap>
-    <DefineConstants>$(DefineConstants);BROWSER_WASM</DefineConstants>
-    <NoWarn>$(NoWarn);CA1416</NoWarn>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Raylib-cs" Version="8.1.0-rc.1" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
-    <WasmExtraFilesToDeploy Include="Web/index.html" TargetPath="index.html" />
-    <WasmExtraFilesToDeploy Include="Web/main.js" TargetPath="main.js" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(RuntimeIdentifier)' != 'browser-wasm'">
-    <Compile Remove="Web/**/*.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />

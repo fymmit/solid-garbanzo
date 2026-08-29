@@ -15,7 +15,7 @@ try {
     dotnet.instance.Module.canvas = canvas;
     await runMain();
 
-    const host = exports.Game.Web.Host;
+    const host = exports.RaylibHost.Web.Host;
     status.hidden = true;
     canvas.focus();
 

@@ -1,4 +1,3 @@
-using static Raylib_cs.Raylib;
 using Core;
 
 internal class CollisionHandler : Behaviour
@@ -12,11 +11,10 @@ internal class CollisionHandler : Behaviour
         {
             var harmful = go.GetComponent<IHarmful>();
             if (harmful is null) continue;
-            if (CheckCollisionCircles(Parent.Position, _hitboxRadius, harmful.ColliderPosition, harmful.ColliderRadius))
+            if (Geometry.CheckCollisionCircles(Parent.Position, _hitboxRadius, harmful.ColliderPosition, harmful.ColliderRadius))
             {
                 Parent.GetComponent<IDamageable>()?.TakeDamage(harmful.Damage);
             }
         }
     }
 }
-
