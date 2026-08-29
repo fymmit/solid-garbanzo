@@ -20,15 +20,13 @@ internal class PlayerDamageHandler : Behaviour, IDamageable
             _canTakeDamage = false;
             if (Health <= 0)
             {
-                Parent?.Destroy();
+                Parent.Destroy();
             }
         }
     }
 
     public override void Update(float delta)
     {
-        if (Parent is null) return;
-
         if (!_canTakeDamage && _invulnTime > 0)
         {
             _invulnTime -= delta;

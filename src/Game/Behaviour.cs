@@ -5,7 +5,7 @@ namespace Game;
 
 public abstract class Behaviour
 {
-    public GameObject? Parent { get; private set; }
+    public GameObject Parent { get; private set; } = null!;
 
     internal void Initialize(GameObject parent)
     {

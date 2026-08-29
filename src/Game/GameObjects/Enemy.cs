@@ -35,8 +35,6 @@ public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
 
     public override void Update(float delta)
     {
-        if (Parent is null) return;
-
         var direction = Vector2.Zero;
         if (_target is not null)
         {
@@ -51,7 +49,7 @@ public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
         Health -= amount;
         if (Health <= 0)
         {
-            Parent?.Destroy();
+            Parent.Destroy();
         }
     }
 }

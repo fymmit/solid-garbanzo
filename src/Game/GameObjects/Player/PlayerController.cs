@@ -11,11 +11,6 @@ internal class PlayerController : Behaviour
 
     public override void Update(float delta)
     {
-        if (Parent is null)
-        {
-            return;
-        }
-
         var movement = new Vector2();
         if (IsKeyDown(KeyboardKey.A)) movement.X += -1;
         if (IsKeyDown(KeyboardKey.D)) movement.X += 1;

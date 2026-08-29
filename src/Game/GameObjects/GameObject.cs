@@ -8,13 +8,8 @@ public class GameObject : IDebugRenderable
     public List<Behaviour> Components { get; } = [];
     public Renderer? Renderer { get; protected set; }
 
-    public Vector2 Position { get; set; }
+    public Vector2 Position { get; set; } = new();
     public float Rotation { get; set; }
-
-    internal GameObject()
-    {
-        Position = new();
-    }
 
     public virtual void DebugRender() { }
 

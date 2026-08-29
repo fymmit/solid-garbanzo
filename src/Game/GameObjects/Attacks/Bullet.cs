@@ -27,8 +27,6 @@ public class BulletBehaviour : Behaviour
 
     public override void Update(float delta)
     {
-        if (Parent is null) return;
-
         Parent.Position += Direction * _speed * delta;
         var enemies = GameObjectManager.GameObjects.Where(go => go is Enemy);
         foreach (var go in enemies)

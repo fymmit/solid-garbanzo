@@ -9,8 +9,6 @@ internal class CollisionHandler : Behaviour
 
     public override void Update(float delta)
     {
-        if (Parent is null) return;
-
         var harmfuls = GameObjectManager.GameObjects.Where(go => go.GetComponent<IHarmful>() is not null);
         foreach (var go in harmfuls)
         {
