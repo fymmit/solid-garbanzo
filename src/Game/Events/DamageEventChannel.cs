@@ -1,12 +1,12 @@
-using Game.GameObjects;
+using Core;
 
-namespace Game.Events;
+namespace Events;
 
 public static class DamageEventChannel
 {
-    public static event Action<GameObject?, int>? DamageEvent;
+    public static event Action<Entity?, int>? DamageEvent;
 
-    public static void InvokeDamageEvent(GameObject? target, int damage)
+    public static void InvokeDamageEvent(Entity? target, int damage)
     {
         DamageEvent?.Invoke(target, damage);
         Console.WriteLine($"Damage event invoked for {target} with {damage} damage");

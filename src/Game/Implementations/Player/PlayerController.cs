@@ -1,9 +1,7 @@
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using System.Numerics;
-using Game.GameObjects.Attacks;
-
-namespace Game.GameObjects.Player;
+using Core;
 
 internal class PlayerController : Behaviour
 {
@@ -28,7 +26,7 @@ internal class PlayerController : Behaviour
         if (IsMouseButtonPressed(MouseButton.Left))
         {
             var direction = mousePos - Parent.Position;
-            var bullet = GameObjectManager.Create<Bullet>(Parent.Position);
+            var bullet = EntityManager.Create<Bullet>(Parent.Position);
             bullet.GetComponent<BulletBehaviour>()?.Direction = direction;
         }
     }

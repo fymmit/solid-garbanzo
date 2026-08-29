@@ -1,10 +1,8 @@
 using Raylib_cs;
-using Game.Traits;
-using Game.Events;
-using Game.GameObjects;
-using Game.GameObjects.Player;
+using Events;
+using Core;
 
-namespace Game.UI;
+namespace UI;
 
 public class HUD : IRenderable, IUpdatable
 {
@@ -28,7 +26,7 @@ public class HUD : IRenderable, IUpdatable
 
     public void Update(float delta) { }
 
-    private void OnDamage(GameObject? target, int amount)
+    private void OnDamage(Entity? target, int amount)
     {
         if (target is Player)
         {

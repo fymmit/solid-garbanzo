@@ -1,4 +1,4 @@
-namespace Game.Events;
+namespace Core.Events;
 
 public static class UpdateEventChannel
 {
@@ -7,13 +7,6 @@ public static class UpdateEventChannel
     public static void InvokeUpdateLoopStartedEvent()
     {
         UpdateLoopStartedEvent?.Invoke();
-    }
-
-    public static event Action<float>? UpdateEvent;
-
-    public static void InvokeUpdateEvent(float delta)
-    {
-        UpdateEvent?.Invoke(delta);
     }
 
     public static event Action? UpdateLoopFinishedEvent;

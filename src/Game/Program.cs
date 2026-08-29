@@ -1,11 +1,9 @@
 ﻿using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
-using Game.GameObjects;
-using Game.GameObjects.Player;
-using Game.Events;
-using Game.Traits;
-using Game.UI;
+using UI;
+using Core;
+using Core.Events;
 
 internal class Program
 {
@@ -31,7 +29,7 @@ internal class Program
 
     internal static void Initialize()
     {
-        GameObjectManager.Setup();
+        EntityManager.Setup();
 
         var windowWidth = 800;
         var windowHeight = 480;
@@ -46,9 +44,9 @@ internal class Program
         _texture = LoadTextureFromImage(image);
 
         Vector2 position = new((float)windowWidth / 2, (float)windowHeight / 2);
-        _player = GameObjectManager.Create<Player>(position);
+        _player = EntityManager.Create<Player>(position);
 
-        GameObjectManager.Create<EnemySpawner>();
+        EntityManager.Create<EnemySpawner>();
 
         Camera = new();
         Camera.Target = _player.Position;
@@ -70,7 +68,13 @@ internal class Program
 
         var delta = GetFrameTime();
 
-        UpdateEventChannel.InvokeUpdateEvent(delta);
+        foreach (var entity in EntityManager.Entities)
+        {
+            foreach (var component in entity.Components)
+            {
+                component.Update(delta);
+            }
+        }
 
         if (IsKeyPressed(KeyboardKey.P))
         {
@@ -98,22 +102,22 @@ internal class Program
         DrawRectangle((int)rec2.X, (int)rec2.Y, (int)rec2.Width, (int)rec2.Height, Color.Yellow);
         DrawRectangle((int)rec3.X, (int)rec3.Y, (int)rec3.Width, (int)rec3.Height, Color.Orange);
 
-        foreach (var go in GameObjectManager.GameObjects)
+        foreach (var go in EntityManager.Entities)
         {
             go.Renderer?.Render();
         }
 
-        if (_isDebug)
-        {
-            foreach (var go in GameObjectManager.GameObjects)
-            {
-                go.DebugRender();
-                foreach (var debugRenderable in go.GetComponents<IDebugRenderable>())
-                {
-                    debugRenderable.DebugRender();
-                }
-            }
-        }
+        // if (_isDebug)
+        // {
+        //     foreach (var go in EntityManager.Entities)
+        //     {
+        //         go.DebugRender();
+        //         foreach (var debugRenderable in go.GetComponents<IDebugRenderable>())
+        //         {
+        //             debugRenderable.DebugRender();
+        //         }
+        //     }
+        // }
 
         EndMode2D();
 

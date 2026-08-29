@@ -1,9 +1,8 @@
 using System.Numerics;
-using Game.Traits;
 
-namespace Game.GameObjects;
+namespace Core;
 
-public class GameObject : IDebugRenderable
+public abstract class Entity
 {
     public List<Behaviour> Components { get; } = [];
     public Renderer? Renderer { get; protected set; }
@@ -11,25 +10,19 @@ public class GameObject : IDebugRenderable
     public Vector2 Position { get; set; } = new();
     public float Rotation { get; set; }
 
-    public virtual void DebugRender() { }
-
-    internal IEnumerable<T> GetComponents<T>()
+    public IEnumerable<T> GetComponents<T>()
     {
         return Components.OfType<T>();
     }
 
-    internal T? GetComponent<T>()
+    public T? GetComponent<T>()
     {
         return GetComponents<T>().FirstOrDefault();
     }
 
     public void Destroy()
     {
-        foreach (var behaviour in Components)
-        {
-            behaviour.Destroy();
-        }
-        GameObjectManager.Remove(this);
+        EntityManager.Remove(this);
     }
 
     protected void Attach<T>() where T : Behaviour, new()

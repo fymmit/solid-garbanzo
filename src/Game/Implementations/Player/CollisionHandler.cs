@@ -1,7 +1,5 @@
 using static Raylib_cs.Raylib;
-using Game.Traits;
-
-namespace Game.GameObjects.Player;
+using Core;
 
 internal class CollisionHandler : Behaviour
 {
@@ -9,7 +7,7 @@ internal class CollisionHandler : Behaviour
 
     public override void Update(float delta)
     {
-        var harmfuls = GameObjectManager.GameObjects.Where(go => go.GetComponent<IHarmful>() is not null);
+        var harmfuls = EntityManager.Find<Entity>().Where(entity => entity.GetComponent<IHarmful>() is not null);
         foreach (var go in harmfuls)
         {
             var harmful = go.GetComponent<IHarmful>();

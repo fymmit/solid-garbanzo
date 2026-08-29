@@ -1,7 +1,5 @@
 using System.Numerics;
 
-namespace Game.Traits;
-
 interface ICollidable
 {
     Vector2 ColliderPosition { get; }

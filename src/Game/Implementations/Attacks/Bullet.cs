@@ -1,15 +1,13 @@
 using Raylib_cs;
 using System.Numerics;
-using Game.Traits;
+using Core;
 
-namespace Game.GameObjects.Attacks;
-
-public class Bullet : GameObject
+public class Bullet : Entity
 {
     public Bullet()
     {
         Attach<BulletBehaviour>();
-        Renderer = new Renderer(this, Raylib_cs.Color.Magenta, 12f, Shape.Circle);
+        Renderer = new BaseRenderer(this, Raylib_cs.Color.Magenta, 12f, Shape.Circle);
     }
 }
 
@@ -28,7 +26,7 @@ public class BulletBehaviour : Behaviour
     public override void Update(float delta)
     {
         Parent.Position += Direction * _speed * delta;
-        var enemies = GameObjectManager.GameObjects.Where(go => go is Enemy);
+        var enemies = EntityManager.Find<Enemy>();
         foreach (var go in enemies)
         {
             var enemy = (Enemy)go;

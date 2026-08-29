@@ -1,8 +1,7 @@
 using System.Numerics;
+using Core;
 
-namespace Game.GameObjects;
-
-public class EnemySpawner : GameObject
+public class EnemySpawner : Entity
 {
     public EnemySpawner()
     {
@@ -15,13 +14,13 @@ public class EnemySpawnerBehaviour : Behaviour
     private const float SPAWN_TIMER = 2f;
     private float _timeSinceLastSpawn = 0f;
 
-    private GameObject? _player;
+    private Entity? _player;
     private int _minRange = 600;
     private int _maxRange = 1000;
 
     public override void Ready()
     {
-        _player = GameObjectManager.GameObjects.OfType<Player.Player>().FirstOrDefault();
+        _player = EntityManager.Find<Player>().FirstOrDefault();
     }
 
     public override void Update(float delta)
@@ -52,6 +51,6 @@ public class EnemySpawnerBehaviour : Behaviour
             x += _player.Position.X;
             y += _player.Position.Y;
         }
-        GameObjectManager.Create<Enemy>(new Vector2(x, y));
+        EntityManager.Create<Enemy>(new Vector2(x, y));
     }
 }

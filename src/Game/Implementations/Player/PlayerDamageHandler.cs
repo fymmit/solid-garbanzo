@@ -1,7 +1,5 @@
-using Game.Traits;
-using Game.Events;
-
-namespace Game.GameObjects.Player;
+using Core;
+using Events;
 
 internal class PlayerDamageHandler : Behaviour, IDamageable
 {

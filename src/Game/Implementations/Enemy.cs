@@ -1,15 +1,13 @@
 using System.Numerics;
 using Raylib_cs;
-using Game.Traits;
+using Core;
 
-namespace Game.GameObjects;
-
-public class Enemy : GameObject
+public class Enemy : Entity
 {
     public Enemy()
     {
         Attach<EnemyBehaviour>();
-        Renderer = new Renderer(this, Color.Red, 24f, Shape.Triangle);
+        Renderer = new BaseRenderer(this, Color.Red, 24f, Shape.Triangle);
     }
 }
 
@@ -26,11 +24,11 @@ public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
 
     public int Health { get; private set; } = 20;
 
-    private Player.Player? _target;
+    private Player? _target;
 
     public override void Ready()
     {
-        _target = GameObjectManager.GameObjects.OfType<Player.Player>().FirstOrDefault();
+        _target = EntityManager.Find<Player>().FirstOrDefault();
     }
 
     public override void Update(float delta)
