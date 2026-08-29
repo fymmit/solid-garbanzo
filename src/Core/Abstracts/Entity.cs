@@ -9,6 +9,8 @@ public abstract class Entity
     public Vector2 Position { get; set; } = new();
     public float Rotation { get; set; }
 
+    private bool _activated = false;
+
     public IEnumerable<T> GetComponents<T>()
     {
         return Components.OfType<T>();
@@ -29,5 +31,22 @@ public abstract class Entity
         var behaviour = new T();
         behaviour.Initialize(this);
         Components.Add(behaviour);
+        if (_activated)
+        {
+            behaviour.Ready();
+        }
+    }
+
+    internal void Activate()
+    {
+        if (!_activated)
+        {
+            _activated = true;
+            var initialComponents = Components.ToArray();
+            foreach (var component in initialComponents)
+            {
+                component.Ready();
+            }
+        }
     }
 }

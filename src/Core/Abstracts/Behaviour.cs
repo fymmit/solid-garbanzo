@@ -7,7 +7,6 @@ public abstract class Behaviour
     internal void Initialize(Entity parent)
     {
         Parent = parent;
-        Ready();
     }
 
     public virtual void Ready() { }

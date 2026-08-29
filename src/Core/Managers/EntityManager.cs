@@ -42,15 +42,22 @@ public static class EntityManager
 
     private static void OnUpdateLoopStarted()
     {
-        foreach (var tbr in _toBeRemoved)
-        {
-            Entities.Remove(tbr);
-        }
-        foreach (var tba in _toBeAdded)
-        {
-            Entities.Add(tba);
-        }
+        var pendingRemovals = _toBeRemoved;
         _toBeRemoved = [];
+        foreach (var entity in pendingRemovals)
+        {
+            Entities.Remove(entity);
+        }
+
+        var pendingAdditions = _toBeAdded;
         _toBeAdded = [];
+        foreach (var entity in pendingAdditions)
+        {
+            Entities.Add(entity);
+        }
+        foreach (var entity in pendingAdditions)
+        {
+            entity.Activate();
+        }
     }
 }
