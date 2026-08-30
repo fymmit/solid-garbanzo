@@ -85,13 +85,6 @@ internal static class Program
         ClearBackground(Color.White);
         DrawTexture(_texture, 0, 0, Color.White);
 
-        var rec1 = new Rectangle(100, 100, 100, 100);
-        var rec2 = new Rectangle(150, 150, 100, 100);
-        var rec3 = GetCollisionRec(rec1, rec2);
-        DrawRectangle((int)rec1.X, (int)rec1.Y, (int)rec1.Width, (int)rec1.Height, Color.Red);
-        DrawRectangle((int)rec2.X, (int)rec2.Y, (int)rec2.Width, (int)rec2.Height, Color.Yellow);
-        DrawRectangle((int)rec3.X, (int)rec3.Y, (int)rec3.Width, (int)rec3.Height, Color.Orange);
-
         foreach (var entity in Game.Entities)
         {
             DrawEntity(entity);

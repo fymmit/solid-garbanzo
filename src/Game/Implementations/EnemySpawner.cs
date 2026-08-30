@@ -11,12 +11,12 @@ public class EnemySpawner : Entity
 
 public class EnemySpawnerBehaviour : Behaviour
 {
-    private const float SPAWN_TIMER = 2f;
+    private const float SPAWN_TIMER = 1f;
     private float _timeSinceLastSpawn = 0f;
 
     private Entity? _player;
-    private int _minRange = 600;
-    private int _maxRange = 1000;
+    private int _minRange = 0;
+    private int _maxRange = 450;
 
     public override void Ready()
     {
@@ -38,6 +38,16 @@ public class EnemySpawnerBehaviour : Behaviour
         var random = new Random();
         float x = random.Next(_minRange, _maxRange);
         float y = random.Next(_minRange, _maxRange);
+
+        if (x > y)
+        {
+            x = _maxRange;
+        }
+        else
+        {
+            y = _maxRange;
+        }
+
         if (random.Next(0, 2) is 0)
         {
             x = -x;

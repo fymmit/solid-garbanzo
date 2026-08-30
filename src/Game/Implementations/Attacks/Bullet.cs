@@ -19,7 +19,13 @@ public class BulletBehaviour : Behaviour
         }
     }
 
-    private float _speed = 50f;
+    private float _speed = 300f;
+    private Vector2 _initialPosition;
+
+    public override void Ready()
+    {
+        _initialPosition = Parent.Position;
+    }
 
     public override void Update(float delta)
     {
@@ -36,6 +42,11 @@ public class BulletBehaviour : Behaviour
                 enemy.GetComponent<IDamageable>()?.TakeDamage(10);
                 Parent.Destroy();
             }
+        }
+
+        if ((_initialPosition - Parent.Position).Length() > 500)
+        {
+            Parent.Destroy();
         }
     }
 }

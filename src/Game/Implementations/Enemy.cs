@@ -11,7 +11,7 @@ public class Enemy : Entity
 
 public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
 {
-    private float _speed = 50f;
+    private float _speed = 100f;
 
     private float _radius = 16f;
 
