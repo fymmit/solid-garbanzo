@@ -1,5 +1,6 @@
 using System.Numerics;
 using Core;
+using Events;
 
 public class Enemy : Entity
 {
@@ -41,6 +42,7 @@ public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
 
     public void TakeDamage(int amount)
     {
+        DamageEventChannel.InvokeDamageEvent(Parent, amount);
         Health -= amount;
         if (Health <= 0)
         {

@@ -38,7 +38,6 @@ public class BulletBehaviour : Behaviour
             if (enemyCollider is null) continue;
             if (Geometry.CheckCollisionCircles(Parent.Position, 12f, enemyCollider.ColliderPosition, enemyCollider.ColliderRadius))
             {
-                Console.WriteLine("Bullet hit enemy");
                 enemy.GetComponent<IDamageable>()?.TakeDamage(10);
                 Parent.Destroy();
             }
