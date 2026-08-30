@@ -117,5 +117,7 @@ internal static class Program
         DrawText("HUD", 14, 14, 16, Color.White);
         DrawRectangle(8, 78, 104, 44, Color.Black);
         DrawRectangle(10, 80, Game.Hud.HealthBarPercentage, 40, Color.Red);
+
+        DrawText($"Kills: {Game.Hud.KillCount}", 400, 14, 16, Color.White);
     }
 }

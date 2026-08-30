@@ -16,7 +16,7 @@ public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
 
     private float _radius = 16f;
 
-    public Vector2 ColliderPosition => Parent!.Position;
+    public Vector2 ColliderPosition => Parent.Position;
     public float ColliderRadius => _radius;
     public int Damage => 10;
 
@@ -46,6 +46,7 @@ public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
         Health -= amount;
         if (Health <= 0)
         {
+            DeathEventChannel.InvokeDeathEvent(Parent);
             Parent.Destroy();
         }
     }
