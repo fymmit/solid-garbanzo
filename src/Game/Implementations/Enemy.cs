@@ -38,6 +38,7 @@ public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
             direction /= direction.Length();
         }
         Parent.Position += direction * delta * _speed;
+        Parent.Rotation = MathF.Atan2(direction.Y, direction.X) * (180f / MathF.PI);
     }
 
     public void TakeDamage(int amount)

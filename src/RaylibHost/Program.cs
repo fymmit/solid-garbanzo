@@ -103,7 +103,7 @@ internal static class Program
                 DrawCircle((int)entity.Position.X, (int)entity.Position.Y, 32f, Color.Blue);
                 break;
             case Enemy:
-                DrawPoly(entity.Position, 3, 24f, 0, Color.Red);
+                DrawPoly(entity.Position, 3, 24f, entity.Rotation, Color.Red);
                 break;
             case Bullet:
                 DrawCircle((int)entity.Position.X, (int)entity.Position.Y, 12f, Color.Magenta);
