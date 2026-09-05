@@ -28,15 +28,19 @@ public abstract class Entity
         IsMarkedForDestruction = true;
     }
 
-    protected void Attach<T>() where T : Behaviour, new()
+    protected void Attach(Behaviour behaviour)
     {
-        var behaviour = new T();
         Components.Add(behaviour);
         if (_activated)
         {
             behaviour.Initialize(this, _entityManager);
             behaviour.Ready();
         }
+    }
+
+    protected void Attach<T>() where T : Behaviour, new()
+    {
+        Attach(new T());
     }
 
     internal void Activate(EntityManager entityManager)
