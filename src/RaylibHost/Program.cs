@@ -33,7 +33,7 @@ internal static class Program
         InitWindow(WindowWidth, WindowHeight, "solid-garbanzo");
 
 #if !BROWSER_WASM
-        SetTargetFPS(60);
+        SetTargetFPS(150);
 #endif
 
         var image = GenImageChecked(1000, 1000, 32, 32, Color.DarkGray, Color.LightGray);
@@ -118,6 +118,10 @@ internal static class Program
         DrawRectangle(8, 78, 104, 44, Color.Black);
         DrawRectangle(10, 80, Game.Hud.HealthBarPercentage, 40, Color.Red);
 
+        DrawRectangle(396, 10, 120, 24, Color.Black);
         DrawText($"Kills: {Game.Hud.KillCount}", 400, 14, 16, Color.White);
+
+        DrawRectangle(596, 10, 120, 24, Color.Black);
+        DrawText($"FPS: {GetFPS()}", 600, 14, 16, Color.White);
     }
 }
