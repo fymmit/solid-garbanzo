@@ -10,6 +10,7 @@ public class EntityManager
     public T Create<T>() where T : Entity, new()
     {
         var instance = new T();
+        Console.WriteLine($"{instance} created");
         _toBeAdded.Add(instance);
 
         return instance;

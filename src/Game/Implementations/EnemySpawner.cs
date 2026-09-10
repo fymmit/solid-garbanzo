@@ -1,5 +1,6 @@
 using System.Numerics;
 using Core;
+using Events;
 
 public class EnemySpawner : Entity
 {
@@ -14,6 +15,8 @@ public class EnemySpawnerBehaviour : Behaviour
     private const float SPAWN_TIMER = 1f;
     private float _timeSinceLastSpawn = 0f;
 
+    private bool _active = true;
+
     private Entity? _player;
     private int _minRange = 0;
     private int _maxRange = 450;
@@ -21,12 +24,13 @@ public class EnemySpawnerBehaviour : Behaviour
     public override void Ready()
     {
         _player = _entityManager.Find<Player>().FirstOrDefault();
+        DeathEventChannel.DeathEvent += OnDeath;
     }
 
     public override void Update(float delta)
     {
         _timeSinceLastSpawn -= delta;
-        if (_timeSinceLastSpawn <= 0)
+        if (_active && _timeSinceLastSpawn <= 0)
         {
             SpawnEnemy();
             _timeSinceLastSpawn = SPAWN_TIMER;
@@ -62,5 +66,14 @@ public class EnemySpawnerBehaviour : Behaviour
             y += _player.Position.Y;
         }
         _entityManager.Create<Enemy>(new Vector2(x, y));
+    }
+
+    void OnDeath(Entity? entity)
+    {
+        if (entity is Player)
+        {
+            _active = false;
+            DeathEventChannel.DeathEvent -= OnDeath;
+        }
     }
 }

@@ -18,6 +18,7 @@ internal class PlayerDamageHandler : Behaviour, IDamageable
             _canTakeDamage = false;
             if (Health <= 0)
             {
+                DeathEventChannel.InvokeDeathEvent(Parent);
                 Parent.Destroy();
             }
         }
