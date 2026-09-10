@@ -10,9 +10,9 @@ public sealed class GameRuntime
 
     public IEnumerable<Entity> Entities => _entityManager.Entities;
 
-    public void Initialize(Vector2 playerPosition)
+    public void Initialize()
     {
-        Player = _entityManager.Create<Player>(playerPosition);
+        Player = _entityManager.Create<Player>();
         _entityManager.Create<EnemySpawner>();
     }
 

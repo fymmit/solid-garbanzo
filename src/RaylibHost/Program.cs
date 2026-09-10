@@ -39,7 +39,7 @@ internal static class Program
         var image = GenImageChecked(1000, 1000, 32, 32, Color.DarkGray, Color.LightGray);
         _texture = LoadTextureFromImage(image);
 
-        Game.Initialize(new Vector2((float)WindowWidth / 2, (float)WindowHeight / 2));
+        Game.Initialize();
 
         _camera = new Camera2D
         {
