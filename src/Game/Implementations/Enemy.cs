@@ -6,6 +6,7 @@ public class Enemy : Entity
 {
     public Enemy()
     {
+        Radius = 24f;
         Attach<EnemyBehaviour>();
     }
 }
@@ -14,10 +15,6 @@ public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
 {
     private float _speed = 100f;
 
-    private float _radius = 16f;
-
-    public Vector2 ColliderPosition => Parent.Position;
-    public float ColliderRadius => _radius;
     public int Damage => 10;
 
     public int Health { get; private set; } = 20;

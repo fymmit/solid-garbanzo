@@ -10,6 +10,7 @@ public abstract class Entity
 
     public Vector2 Position { get; set; } = new();
     public float Rotation { get; set; }
+    public float Radius { get; set; }
 
     private bool _activated = false;
 
@@ -25,6 +26,10 @@ public abstract class Entity
 
     public void Destroy()
     {
+        foreach (var component in Components)
+        {
+            component.OnDestroy();
+        }
         IsMarkedForDestruction = true;
     }
 

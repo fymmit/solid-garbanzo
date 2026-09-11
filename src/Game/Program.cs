@@ -4,7 +4,7 @@ var input = new GameInput();
 
 var frameTime = 0.1f;
 
-var simulationDuration = 10f;
+var simulationDuration = 20f;
 
 var steps = simulationDuration / frameTime;
 

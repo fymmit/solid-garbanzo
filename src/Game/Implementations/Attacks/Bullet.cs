@@ -5,6 +5,7 @@ public class Bullet : Entity
 {
     public Bullet()
     {
+        Radius = 12f;
         Attach<BulletBehaviour>();
         Attach(new Duration(1f));
     }
@@ -26,15 +27,16 @@ public class BulletBehaviour : Behaviour
     {
         Parent.Position += Direction * _speed * delta;
         var enemies = _entityManager.Find<Enemy>();
-        foreach (var go in enemies)
+        foreach (var enemy in enemies)
         {
-            var enemy = (Enemy)go;
-            var enemyCollider = enemy.GetComponent<ICollidable>();
-            if (enemyCollider is null) continue;
-            if (Geometry.CheckCollisionCircles(Parent.Position, 12f, enemyCollider.ColliderPosition, enemyCollider.ColliderRadius))
+            var damageable = enemy.GetComponent<IDamageable>();
+            if (damageable is not null)
             {
-                enemy.GetComponent<IDamageable>()?.TakeDamage(10);
-                Parent.Destroy();
+                if (Geometry.CheckCollisionCircles(Parent.Position, Parent.Radius, enemy.Position, enemy.Radius))
+                {
+                    damageable.TakeDamage(10);
+                    Parent.Destroy();
+                }
             }
         }
     }

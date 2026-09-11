@@ -1,12 +1,4 @@
-using System.Numerics;
-
-interface ICollidable
-{
-    Vector2 ColliderPosition { get; }
-    float ColliderRadius { get; }
-}
-
-interface IHarmful : ICollidable
+interface IHarmful
 {
     int Damage { get; }
 }
