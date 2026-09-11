@@ -13,5 +13,6 @@ public abstract class Behaviour
 
     public virtual void Ready() { }
     public virtual void Update(float delta) { }
+    public virtual void OnDestroy() { }
 }
 
