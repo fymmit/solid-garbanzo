@@ -102,6 +102,9 @@ internal static class Program
             case Player:
                 DrawCircle((int)entity.Position.X, (int)entity.Position.Y, entity.Radius, Color.Blue);
                 break;
+            case Obstacle:
+                DrawCircle((int)entity.Position.X, (int)entity.Position.Y, entity.Radius, Color.Pink);
+                break;
             case Enemy:
                 DrawPoly(entity.Position, 3, entity.Radius, entity.Rotation, Color.Red);
                 break;
