@@ -15,7 +15,7 @@ internal static class Program
     private static Texture2D _texture;
     private static bool _isDebug;
 
-    private static List<Texture2D> _textures = [];
+    private static List<TextureInfo> _textures = [];
 
     [STAThread]
     private static void Main()
@@ -44,7 +44,15 @@ internal static class Program
         foreach (var asset in Directory.EnumerateFiles(Path.Combine(AppContext.BaseDirectory, "assets")))
         {
             var texture = LoadTexture(asset);
-            _textures.Add(texture);
+            var width = (int)texture.Dimensions.X;
+            var height = (int)texture.Dimensions.Y;
+            var textureInfo = new TextureInfo
+            {
+                Texture = texture,
+                Width = width,
+                Height = height
+            };
+            _textures.Add(textureInfo);
         }
 
         Game.Initialize();
@@ -109,11 +117,9 @@ internal static class Program
         {
             case Player:
                 var texture = _textures[0];
-                var width = texture.Dimensions.X;
-                var height = texture.Dimensions.Y;
-                var x = (int)(entity.Position.X - width / 2);
-                var y = (int)(entity.Position.Y - height / 2);
-                DrawTexture(_textures[0], x, y, Color.White);
+                var x = (int)entity.Position.X - texture.Width / 2;
+                var y = (int)entity.Position.Y - texture.Height / 2;
+                DrawTexture(texture.Texture, x, y, Color.White);
                 if (_isDebug)
                 {
                     DrawCircleLines((int)entity.Position.X, (int)entity.Position.Y, entity.Radius, Color.Green);
@@ -144,4 +150,11 @@ internal static class Program
         DrawRectangle(596, 10, 120, 24, Color.Black);
         DrawText($"FPS: {GetFPS()}", 600, 14, 16, Color.White);
     }
+}
+
+internal struct TextureInfo
+{
+    internal Texture2D Texture;
+    internal int Width;
+    internal int Height;
 }
