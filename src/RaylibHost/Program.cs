@@ -15,6 +15,8 @@ internal static class Program
     private static Texture2D _texture;
     private static bool _isDebug;
 
+    private static List<Texture2D> _textures = [];
+
     [STAThread]
     private static void Main()
     {
@@ -38,6 +40,12 @@ internal static class Program
 
         var image = GenImageChecked(1000, 1000, 32, 32, Color.DarkGray, Color.LightGray);
         _texture = LoadTextureFromImage(image);
+
+        foreach (var asset in Directory.EnumerateFiles(Path.Combine(AppContext.BaseDirectory, "assets")))
+        {
+            var texture = LoadTexture(asset);
+            _textures.Add(texture);
+        }
 
         Game.Initialize();
 
@@ -100,7 +108,16 @@ internal static class Program
         switch (entity)
         {
             case Player:
-                DrawCircle((int)entity.Position.X, (int)entity.Position.Y, entity.Radius, Color.Blue);
+                var texture = _textures[0];
+                var width = texture.Dimensions.X;
+                var height = texture.Dimensions.Y;
+                var x = (int)(entity.Position.X - width / 2);
+                var y = (int)(entity.Position.Y - height / 2);
+                DrawTexture(_textures[0], x, y, Color.White);
+                if (_isDebug)
+                {
+                    DrawCircleLines((int)entity.Position.X, (int)entity.Position.Y, entity.Radius, Color.Green);
+                }
                 break;
             case Obstacle:
                 DrawCircle((int)entity.Position.X, (int)entity.Position.Y, entity.Radius, Color.Pink);
