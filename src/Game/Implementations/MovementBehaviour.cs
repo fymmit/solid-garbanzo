@@ -14,8 +14,9 @@ public class MovementBehaviour : Behaviour, IMovable
             var wouldBlock = Geometry.CheckCollisionCircles(newPosition, Parent.Radius, obstacle.Position, obstacle.Radius);
             if (wouldBlock)
             {
-                var difference = newPosition - obstacle.Position;
-                newPosition += Vector2.Normalize(difference);
+                var direction = Vector2.Normalize(Parent.Position - obstacle.Position);
+                var distance = Vector2.Distance(Parent.Position, obstacle.Position) - Parent.Radius - obstacle.Radius;
+                newPosition -= direction * distance;
             }
         }
 
