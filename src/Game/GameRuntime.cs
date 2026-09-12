@@ -13,6 +13,7 @@ public sealed class GameRuntime
     {
         Player = _entityManager.Create<Player>();
         _entityManager.Create<EnemySpawner>();
+        _entityManager.Create<Obstacle>(new(100, 100));
     }
 
     public void Update(float delta, GameInput input)

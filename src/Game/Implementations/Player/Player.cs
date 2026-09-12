@@ -8,5 +8,6 @@ public class Player : Entity
         Attach<PlayerController>();
         Attach<CollisionHandler>();
         Attach<PlayerDamageHandler>();
+        Attach<MovementBehaviour>();
     }
 }

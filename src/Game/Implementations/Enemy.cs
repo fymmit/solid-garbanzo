@@ -8,6 +8,7 @@ public class Enemy : Entity
     {
         Radius = 24f;
         Attach<EnemyBehaviour>();
+        Attach<MovementBehaviour>();
     }
 }
 
@@ -19,11 +20,14 @@ public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
 
     public int Health { get; private set; } = 20;
 
+    private IMovable? _movementBehaviour;
+
     private Player? _target;
 
     public override void Ready()
     {
         _target = _entityManager.Find<Player>().FirstOrDefault();
+        _movementBehaviour = Parent.GetComponent<IMovable>();
     }
 
     public override void Update(float delta)
@@ -34,7 +38,8 @@ public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
             direction = _target.Position - Parent.Position;
             direction /= direction.Length();
         }
-        Parent.Position += direction * delta * _speed;
+        var movement = direction * delta * _speed;
+        _movementBehaviour?.Move(movement);
         Parent.Rotation = MathF.Atan2(direction.Y, direction.X) * (180f / MathF.PI);
     }
 
