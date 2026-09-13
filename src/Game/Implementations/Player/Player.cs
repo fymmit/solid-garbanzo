@@ -9,5 +9,6 @@ public class Player : Entity
         Attach<CollisionHandler>();
         Attach<PlayerDamageHandler>();
         Attach<MovementBehaviour>();
+        Attach<AutoTargeting>();
     }
 }

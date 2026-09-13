@@ -76,4 +76,9 @@ public class EnemySpawnerBehaviour : Behaviour
             DeathEventChannel.DeathEvent -= OnDeath;
         }
     }
+
+    public override void OnDestroy()
+    {
+        DeathEventChannel.DeathEvent -= OnDeath;
+    }
 }

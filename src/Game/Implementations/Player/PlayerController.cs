@@ -23,12 +23,5 @@ internal class PlayerController : Behaviour
         var movement = direction * delta * _speed;
 
         _movementBehaviour?.Move(movement);
-
-        if (CurrentInput.Value.FirePressed)
-        {
-            var aimDirection = CurrentInput.Value.AimPosition - Parent.Position;
-            var bullet = _entityManager.Create<Bullet>(Parent.Position);
-            bullet.GetComponent<BulletBehaviour>()?.Direction = aimDirection;
-        }
     }
 }

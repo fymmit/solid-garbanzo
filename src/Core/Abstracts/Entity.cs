@@ -26,11 +26,17 @@ public abstract class Entity
 
     public void Destroy()
     {
+        if (IsMarkedForDestruction)
+        {
+            return;
+        }
+
+        IsMarkedForDestruction = true;
+
         foreach (var component in Components)
         {
             component.OnDestroy();
         }
-        IsMarkedForDestruction = true;
     }
 
     protected void Attach(Behaviour behaviour)
