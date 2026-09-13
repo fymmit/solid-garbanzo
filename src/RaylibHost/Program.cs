@@ -132,7 +132,23 @@ internal static class Program
                 DrawPoly(entity.Position, 3, entity.Radius, entity.Rotation, Color.Red);
                 break;
             case Bullet:
-                DrawCircle((int)entity.Position.X, (int)entity.Position.Y, entity.Radius, Color.Magenta);
+                DrawCircle((int)entity.Position.X, (int)entity.Position.Y, entity.Radius, Color.Black);
+                break;
+            case BloodParticle:
+                var duration = entity.GetComponent<Duration>();
+                if (duration is not null)
+                {
+                    DrawPoly(
+                        entity.Position,
+                        6,
+                        32f,
+                        0,
+                        new Color(
+                            255,
+                            0,
+                            0,
+                            (duration.RemainingLifeTime / duration.OriginalLifeTime)));
+                }
                 break;
         }
     }

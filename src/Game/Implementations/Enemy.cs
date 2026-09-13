@@ -50,6 +50,7 @@ public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
         if (Health <= 0)
         {
             DeathEventChannel.InvokeDeathEvent(Parent);
+            EntityManager.Create<BloodParticle>(Parent.Position);
             Parent.Destroy();
         }
     }
