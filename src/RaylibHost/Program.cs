@@ -101,7 +101,7 @@ internal static class Program
         ClearBackground(Color.White);
         DrawTexture(_texture, 0, 0, Color.White);
 
-        foreach (var entity in Game.Entities)
+        foreach (var entity in EntityManager.Entities)
         {
             DrawEntity(entity);
         }

@@ -17,7 +17,7 @@ public class AutoTargeting : Behaviour
     {
         if (_target is null)
         {
-            var closestEnemy = _entityManager
+            var closestEnemy = EntityManager
                 .Find<Enemy>()
                 .OrderBy(e => Vector2.Distance(Parent.Position, e.Position))
                 .FirstOrDefault();
@@ -41,7 +41,7 @@ public class AutoTargeting : Behaviour
             return;
         }
         var aimDirection = _target.Position - Parent.Position;
-        var bullet = _entityManager.Create<Bullet>(Parent.Position);
+        var bullet = EntityManager.Create<Bullet>(Parent.Position);
         bullet.GetComponent<BulletBehaviour>()?.Direction = aimDirection;
     }
 

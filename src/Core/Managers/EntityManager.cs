@@ -2,12 +2,12 @@ using System.Numerics;
 
 namespace Core;
 
-public class EntityManager
+public static class EntityManager
 {
-    public List<Entity> Entities { get; private set; } = [];
-    private List<Entity> _toBeAdded = [];
+    public static List<Entity> Entities { get; private set; } = [];
+    private static List<Entity> _toBeAdded = [];
 
-    public T Create<T>() where T : Entity, new()
+    public static T Create<T>() where T : Entity, new()
     {
         var instance = new T();
         Console.WriteLine($"{instance} created");
@@ -16,7 +16,7 @@ public class EntityManager
         return instance;
     }
 
-    public T Create<T>(Vector2 position) where T : Entity, new()
+    public static T Create<T>(Vector2 position) where T : Entity, new()
     {
         var instance = Create<T>();
         instance.Position = position;
@@ -24,12 +24,12 @@ public class EntityManager
         return instance;
     }
 
-    public IEnumerable<T> Find<T>() where T : Entity
+    public static IEnumerable<T> Find<T>() where T : Entity
     {
         return Entities.OfType<T>();
     }
 
-    public void ProcessPendingEntities()
+    public static void ProcessPendingEntities()
     {
         Entities.RemoveAll(e => e.IsMarkedForDestruction);
 
@@ -41,7 +41,7 @@ public class EntityManager
         }
         foreach (var entity in pendingAdditions)
         {
-            entity.Activate(this);
+            entity.Activate();
         }
     }
 }

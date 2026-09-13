@@ -26,7 +26,7 @@ public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
 
     public override void Ready()
     {
-        _target = _entityManager.Find<Player>().FirstOrDefault();
+        _target = EntityManager.Find<Player>().FirstOrDefault();
         _movementBehaviour = Parent.GetComponent<IMovable>();
     }
 

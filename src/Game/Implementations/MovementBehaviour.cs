@@ -7,7 +7,7 @@ public class MovementBehaviour : Behaviour, IMovable
     {
         var newPosition = Parent.Position + movement;
 
-        var obstacles = _entityManager.Find<Obstacle>();
+        var obstacles = EntityManager.Find<Obstacle>();
 
         foreach (var obstacle in obstacles)
         {

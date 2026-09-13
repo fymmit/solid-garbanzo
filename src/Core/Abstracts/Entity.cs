@@ -5,7 +5,6 @@ namespace Core;
 public abstract class Entity
 {
     public bool IsMarkedForDestruction { get; private set; }
-    protected EntityManager _entityManager = null!;
     public List<Behaviour> Components { get; } = [];
 
     public Vector2 Position { get; set; } = new();
@@ -44,7 +43,7 @@ public abstract class Entity
         Components.Add(behaviour);
         if (_activated)
         {
-            behaviour.Initialize(this, _entityManager);
+            behaviour.Initialize(this);
             behaviour.Ready();
         }
     }
@@ -54,16 +53,15 @@ public abstract class Entity
         Attach(new T());
     }
 
-    internal void Activate(EntityManager entityManager)
+    internal void Activate()
     {
-        _entityManager = entityManager;
         if (!_activated)
         {
             _activated = true;
             var initialComponents = Components.ToArray();
             foreach (var component in initialComponents)
             {
-                component.Initialize(this, _entityManager);
+                component.Initialize(this);
                 component.Ready();
             }
         }

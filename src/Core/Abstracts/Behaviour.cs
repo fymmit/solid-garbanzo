@@ -2,13 +2,11 @@ namespace Core;
 
 public abstract class Behaviour
 {
-    protected EntityManager _entityManager = null!;
     public Entity Parent { get; private set; } = null!;
 
-    internal void Initialize(Entity parent, EntityManager entityManager)
+    internal void Initialize(Entity parent)
     {
         Parent = parent;
-        _entityManager = entityManager;
     }
 
     public virtual void Ready() { }

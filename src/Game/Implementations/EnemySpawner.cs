@@ -23,7 +23,7 @@ public class EnemySpawnerBehaviour : Behaviour
 
     public override void Ready()
     {
-        _player = _entityManager.Find<Player>().FirstOrDefault();
+        _player = EntityManager.Find<Player>().FirstOrDefault();
         DeathEventChannel.DeathEvent += OnDeath;
     }
 
@@ -65,7 +65,7 @@ public class EnemySpawnerBehaviour : Behaviour
             x += _player.Position.X;
             y += _player.Position.Y;
         }
-        _entityManager.Create<Enemy>(new Vector2(x, y));
+        EntityManager.Create<Enemy>(new Vector2(x, y));
     }
 
     void OnDeath(Entity? entity)

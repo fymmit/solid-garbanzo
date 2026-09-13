@@ -26,7 +26,7 @@ public class BulletBehaviour : Behaviour
     public override void Update(float delta)
     {
         Parent.Position += Direction * _speed * delta;
-        var enemies = _entityManager.Find<Enemy>();
+        var enemies = EntityManager.Find<Enemy>();
         foreach (var enemy in enemies)
         {
             var damageable = enemy.GetComponent<IDamageable>();
