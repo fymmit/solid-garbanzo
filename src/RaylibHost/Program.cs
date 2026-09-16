@@ -90,6 +90,20 @@ internal static class Program
             _isDebug = !_isDebug;
         }
 
+        if (IsKeyPressed(KeyboardKey.X))
+        {
+            Game.GameState.IsPaused = !Game.GameState.IsPaused;
+        }
+
+        if (IsKeyPressed(KeyboardKey.Nine))
+        {
+            Game.GameState.AlterTimeScale(false);
+        }
+        if (IsKeyPressed(KeyboardKey.Zero))
+        {
+            Game.GameState.AlterTimeScale(true);
+        }
+
         _camera.Target = Game.Player.Position;
     }
 
@@ -165,6 +179,9 @@ internal static class Program
 
         DrawRectangle(596, 10, 120, 24, Color.Black);
         DrawText($"FPS: {GetFPS()}", 600, 14, 16, Color.White);
+
+        DrawRectangle(596, 40, 120, 24, Color.Black);
+        DrawText($"Timescale: {Game.GameState.TimeScale.ToString("N2")}", 600, 44, 16, Color.White);
     }
 }
 
