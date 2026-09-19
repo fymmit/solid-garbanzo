@@ -5,12 +5,12 @@ using Events;
 public class AutoTargeting : Behaviour
 {
     private Enemy? _target;
-    private const float SHOOT_INTERVAL = 0.5f;
-    private float _shootTimer = SHOOT_INTERVAL;
+    private Skillbar? _skillbar;
 
     public override void Ready()
     {
         DeathEventChannel.DeathEvent += OnDeathEvent;
+        _skillbar = Parent.GetComponent<Skillbar>();
     }
 
     public override void Update(float delta)
@@ -25,24 +25,13 @@ public class AutoTargeting : Behaviour
             _target = closestEnemy;
         }
 
-        _shootTimer -= delta;
-        if (_shootTimer <= 0)
+        if (_skillbar is not null && _target is not null)
         {
-            _shootTimer = SHOOT_INTERVAL;
-            Shoot();
+            foreach (var skill in _skillbar.Skills)
+            {
+                skill.Invoke(Parent.Position, _target.Position);
+            }
         }
-
-    }
-
-    private void Shoot()
-    {
-        if (_target is null)
-        {
-            return;
-        }
-        var aimDirection = _target.Position - Parent.Position;
-        var bullet = EntityManager.Create<Bullet>(Parent.Position);
-        bullet.GetComponent<BulletBehaviour>()?.Direction = aimDirection;
     }
 
     void OnDeathEvent(Entity? target)

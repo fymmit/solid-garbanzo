@@ -10,5 +10,6 @@ public class Player : Entity
         Attach<PlayerDamageHandler>();
         Attach<MovementBehaviour>();
         Attach<AutoTargeting>();
+        Attach<Skillbar>();
     }
 }
