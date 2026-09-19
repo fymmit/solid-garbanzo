@@ -3,9 +3,11 @@ using Core;
 
 public class MovementBehaviour : Behaviour, IMovable
 {
+    public float MovementSpeedCoefficient = 1f;
+
     public void Move(Vector2 movement)
     {
-        var newPosition = Parent.Position + movement;
+        var newPosition = Parent.Position + movement * MovementSpeedCoefficient;
 
         var obstacles = EntityManager.Find<Obstacle>();
 

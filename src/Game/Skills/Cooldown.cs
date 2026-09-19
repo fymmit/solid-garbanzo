@@ -4,6 +4,7 @@ public class Cooldown : Behaviour
 {
     private float _cooldownValue;
     private float _remainingCooldown;
+    public float RemainingCooldown => Math.Max(_remainingCooldown, 0);
 
     public Cooldown(float cooldown)
     {
