@@ -4,6 +4,6 @@ public class BloodParticle : Entity
 {
     public BloodParticle()
     {
-        Attach(new Duration(3f));
+        Timers.CreateTimer(3f, () => Destroy());
     }
 }

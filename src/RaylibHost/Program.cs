@@ -152,20 +152,23 @@ internal static class Program
                 DrawCircle((int)entity.Position.X, (int)entity.Position.Y, entity.Radius, Color.Gray);
                 break;
             case BloodParticle:
-                var duration = entity.GetComponent<Duration>();
-                if (duration is not null)
-                {
-                    DrawPoly(
-                        entity.Position,
-                        6,
-                        32f,
-                        0,
-                        new Color(
-                            255,
-                            0,
-                            0,
-                            (duration.RemainingLifeTime / duration.OriginalLifeTime)));
-                }
+                // TODO: rethink the following logic with the new Timers implementation
+
+                // var duration = entity.GetComponent<Duration>();
+                // if (duration is not null)
+                // {
+                //     DrawPoly(
+                //         entity.Position,
+                //         6,
+                //         32f,
+                //         0,
+                //         new Color(
+                //             255,
+                //             0,
+                //             0,
+                //             (duration.RemainingLifeTime / duration.OriginalLifeTime)));
+                // }
+                DrawPoly(entity.Position, 6, 32f, 0, Color.Red);
                 break;
         }
     }
@@ -186,22 +189,24 @@ internal static class Program
         DrawRectangle(596, 40, 120, 24, Color.Black);
         DrawText($"Timescale: {Game.GameState.TimeScale.ToString("N2")}", 600, 44, 16, Color.White);
 
-        var skillbar = Game.Player.GetComponent<Skillbar>();
-        if (skillbar is not null)
-        {
-            for (var i = 0; i < skillbar.Skills.Count; i++)
-            {
-                var skill = skillbar.Skills[i];
-                var cd = skill.GetComponent<Cooldown>();
-                if (cd is not null)
-                {
-                    var text = cd.IsReady() ? "Ready" : cd.RemainingCooldown.ToString("N1");
-                    var x = i * 140 + 10;
-                    DrawRectangle(x, GetScreenHeight() - 50, 120, 30, Color.Black);
-                    DrawText(text, x + 4, GetScreenHeight() - 46, 24, Color.White);
-                }
-            }
-        }
+        // TODO: rethink cooldown drawing with the new Timers implementation
+
+        // var skillbar = Game.Player.GetComponent<Skillbar>();
+        // if (skillbar is not null)
+        // {
+        //     for (var i = 0; i < skillbar.Skills.Count; i++)
+        //     {
+        //         var skill = skillbar.Skills[i];
+        //         var cd = skill.GetComponent<Cooldown>();
+        //         if (cd is not null)
+        //         {
+        //             var text = cd.IsReady() ? "Ready" : cd.RemainingCooldown.ToString("N1");
+        //             var x = i * 140 + 10;
+        //             DrawRectangle(x, GetScreenHeight() - 50, 120, 30, Color.Black);
+        //             DrawText(text, x + 4, GetScreenHeight() - 46, 24, Color.White);
+        //         }
+        //     }
+        // }
     }
 }
 

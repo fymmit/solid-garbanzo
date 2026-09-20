@@ -31,6 +31,7 @@ public abstract class Entity
         }
 
         IsMarkedForDestruction = true;
+        Console.WriteLine($"{this} destroyed");
 
         foreach (var component in Components)
         {

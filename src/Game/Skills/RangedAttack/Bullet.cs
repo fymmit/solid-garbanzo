@@ -7,7 +7,6 @@ public class Bullet : Entity
     {
         Radius = 12f;
         Attach<BulletBehaviour>();
-        Attach(new Duration(1f));
     }
 }
 
