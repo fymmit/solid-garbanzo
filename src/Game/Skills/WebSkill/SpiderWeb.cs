@@ -1,8 +1,8 @@
 using Core;
 
-public class Web : Entity
+public class SpiderWeb : Entity
 {
-    public Web()
+    public SpiderWeb()
     {
         Radius = 36f;
         Attach<WebBehaviour>();

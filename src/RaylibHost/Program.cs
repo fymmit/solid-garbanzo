@@ -148,7 +148,7 @@ internal static class Program
             case Bullet:
                 DrawCircle((int)entity.Position.X, (int)entity.Position.Y, entity.Radius, Color.Black);
                 break;
-            case Web:
+            case SpiderWeb:
                 DrawCircle((int)entity.Position.X, (int)entity.Position.Y, entity.Radius, Color.Gray);
                 break;
             case BloodParticle:

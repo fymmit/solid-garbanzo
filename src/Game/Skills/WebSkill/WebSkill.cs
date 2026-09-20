@@ -11,7 +11,7 @@ public class WebSkill : SkillEntity
         if (_isReady)
         {
             _isReady = false;
-            var web = EntityManager.Create<Web>(targetPosition);
+            var web = EntityManager.Create<SpiderWeb>(targetPosition);
             Timers.CreateTimer(3f, () => web.Destroy());
             Timers.CreateTimer(COOLDOWN, () => _isReady = true);
         }
