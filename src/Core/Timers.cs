@@ -10,10 +10,31 @@ public static class Timers
         var timerInstance = new TimerInstance()
         {
             Duration = duration,
+            OriginalDuration = duration,
             Callback = callback
         };
         TimerInstances.Add(timerInstance);
         return timerInstance;
+    }
+
+    public static TimerInstance CreateInterval(float interval, Action callback)
+    {
+        var timerInstance = new TimerInstance()
+        {
+            Duration = interval,
+            OriginalDuration = interval,
+            IsInterval = true,
+            Callback = callback
+        };
+        TimerInstances.Add(timerInstance);
+        timerInstance.Callback();
+        return timerInstance;
+
+    }
+
+    public static void RemoveTimer(TimerInstance? timer)
+    {
+        TimerInstances.Remove(timer);
     }
 }
 
@@ -36,7 +57,14 @@ public class TimerBehaviour : Behaviour
             if (timer.Duration <= 0)
             {
                 timer.Callback();
-                markedForRemoval.Add(timer);
+                if (timer.IsInterval)
+                {
+                    timer.Duration = timer.OriginalDuration;
+                }
+                else
+                {
+                    markedForRemoval.Add(timer);
+                }
             }
         }
 
@@ -50,5 +78,7 @@ public class TimerBehaviour : Behaviour
 public record TimerInstance
 {
     internal float Duration;
+    internal float OriginalDuration;
+    internal bool IsInterval;
     internal Action Callback = null!;
 }

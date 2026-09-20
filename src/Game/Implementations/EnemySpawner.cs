@@ -13,9 +13,7 @@ public class EnemySpawner : Entity
 public class EnemySpawnerBehaviour : Behaviour
 {
     private const float SPAWN_TIMER = 1f;
-    private float _timeSinceLastSpawn = 0f;
-
-    private bool _active = true;
+    private TimerInstance? _timer;
 
     private Entity? _player;
     private int _minRange = 0;
@@ -25,16 +23,8 @@ public class EnemySpawnerBehaviour : Behaviour
     {
         _player = EntityManager.Find<Player>().FirstOrDefault();
         DeathEventChannel.DeathEvent += OnDeath;
-    }
 
-    public override void Update(float delta)
-    {
-        _timeSinceLastSpawn -= delta;
-        if (_active && _timeSinceLastSpawn <= 0)
-        {
-            SpawnEnemy();
-            _timeSinceLastSpawn = SPAWN_TIMER;
-        }
+        _timer = Timers.CreateInterval(SPAWN_TIMER, () => SpawnEnemy());
     }
 
     void SpawnEnemy()
@@ -72,13 +62,13 @@ public class EnemySpawnerBehaviour : Behaviour
     {
         if (entity is Player)
         {
-            _active = false;
-            DeathEventChannel.DeathEvent -= OnDeath;
+            Parent.Destroy();
         }
     }
 
     public override void OnDestroy()
     {
         DeathEventChannel.DeathEvent -= OnDeath;
+        Timers.RemoveTimer(_timer);
     }
 }
