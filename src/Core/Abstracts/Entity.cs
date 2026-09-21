@@ -11,6 +11,8 @@ public abstract class Entity
     public float Rotation { get; set; }
     public float Radius { get; set; }
 
+    public int DrawPriority { get; protected set; } = 0;
+
     private bool _activated = false;
 
     public IEnumerable<T> GetComponents<T>()

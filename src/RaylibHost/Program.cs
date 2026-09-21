@@ -115,7 +115,8 @@ internal static class Program
         ClearBackground(Color.White);
         DrawTexture(_texture, 0, 0, Color.White);
 
-        foreach (var entity in EntityManager.Entities)
+        var prioritySortedEntities = EntityManager.Entities.OrderBy(e => e.DrawPriority);
+        foreach (var entity in prioritySortedEntities)
         {
             DrawEntity(entity);
         }
@@ -144,6 +145,7 @@ internal static class Program
                 break;
             case Enemy:
                 DrawPoly(entity.Position, 3, entity.Radius, entity.Rotation, Color.Red);
+                DrawPolyLines(entity.Position, 3, entity.Radius, entity.Rotation, Color.Black);
                 break;
             case Bullet:
                 DrawCircle((int)entity.Position.X, (int)entity.Position.Y, entity.Radius, Color.Black);

@@ -6,6 +6,7 @@ public class Enemy : Entity
 {
     public Enemy()
     {
+        DrawPriority = 10;
         Radius = 24f;
         Attach<EnemyBehaviour>();
         Attach<MovementBehaviour>();

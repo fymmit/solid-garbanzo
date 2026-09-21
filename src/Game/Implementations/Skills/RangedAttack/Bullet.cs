@@ -5,6 +5,7 @@ public class Bullet : Entity
 {
     public Bullet()
     {
+        DrawPriority = 2;
         Radius = 12f;
         Attach<BulletBehaviour>();
     }
