@@ -1,4 +1,5 @@
 using Core;
+using Infrastructure;
 using UI;
 
 public sealed class GameRuntime
@@ -6,6 +7,7 @@ public sealed class GameRuntime
     public Player Player { get; private set; } = null!;
     public HUD Hud { get; } = new();
     public GameState GameState = new(false);
+    private IInputProvider _inputProvider = new InputProvider();
 
     public void Initialize()
     {
@@ -14,14 +16,30 @@ public sealed class GameRuntime
         EntityManager.Create<Obstacle>(new(100, 100));
     }
 
-    public void Update(float delta, GameInput input)
+    public void Update(float delta)
     {
+        CurrentInput.Value = _inputProvider.GetInput();
+
+        if (CurrentInput.Value.PausePressed)
+        {
+            GameState.IsPaused = !GameState.IsPaused;
+        }
+
+        if (CurrentInput.Value.TimescaleDecreasePressed)
+        {
+            GameState.AlterTimeScale(false);
+        }
+
+        if (CurrentInput.Value.TimescaleIncreasePressed)
+        {
+            GameState.AlterTimeScale(true);
+        }
+
         if (GameState.IsPaused)
         {
             return;
         }
 
-        CurrentInput.Value = input;
         EntityManager.ProcessPendingEntities();
 
         var effectiveDelta = delta * GameState.TimeScale;
@@ -38,10 +56,10 @@ public sealed class GameRuntime
 
 public struct GameState(bool isPaused)
 {
-    public bool IsPaused = isPaused;
+    public bool IsPaused { get; internal set; } = isPaused;
     public float TimeScale { get; private set; } = 1;
 
-    public void AlterTimeScale(bool positive)
+    internal void AlterTimeScale(bool positive)
     {
         TimeScale += 0.1f * (positive ? 1 : -1);
     }

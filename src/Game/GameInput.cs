@@ -1,8 +1,6 @@
-using System.Numerics;
-
-public readonly record struct GameInput(Vector2 Movement, Vector2 AimPosition, bool FirePressed);
+using Core;
 
 internal static class CurrentInput
 {
-    public static GameInput Value { get; set; }
+    public static Input Value { get; set; }
 }

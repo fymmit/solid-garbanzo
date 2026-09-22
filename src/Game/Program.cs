@@ -1,7 +1,5 @@
 var game = new GameRuntime();
 
-var input = new GameInput();
-
 var frameTime = 0.1f;
 
 var simulationDuration = 60f;
@@ -12,5 +10,5 @@ game.Initialize();
 
 for (var i = 0; i < steps; i++)
 {
-    game.Update(frameTime, input);
+    game.Update(frameTime);
 }

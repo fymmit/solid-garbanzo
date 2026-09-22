@@ -2,6 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/Core/Core.csproj" />
     <Project Path="src/Game/Game.csproj" />
+    <Project Path="src/Infrastructure/Infrastructure.csproj" />
     <Project Path="src/RaylibHost/RaylibHost.csproj" />
   </Folder>
 </Solution>

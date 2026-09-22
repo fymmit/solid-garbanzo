@@ -75,33 +75,12 @@ internal static class Program
 
     private static void Update()
     {
-        var movement = new Vector2();
-        if (IsKeyDown(KeyboardKey.A)) movement.X += -1;
-        if (IsKeyDown(KeyboardKey.D)) movement.X += 1;
-        if (IsKeyDown(KeyboardKey.W)) movement.Y += -1;
-        if (IsKeyDown(KeyboardKey.S)) movement.Y += 1;
-
-        var aimPosition = GetScreenToWorld2D(GetMousePosition(), _camera);
-        var input = new GameInput(movement, aimPosition, IsMouseButtonPressed(MouseButton.Left));
-        Game.Update(GetFrameTime(), input);
+        // var aimPosition = GetScreenToWorld2D(GetMousePosition(), _camera);
+        Game.Update(GetFrameTime());
 
         if (IsKeyPressed(KeyboardKey.P))
         {
             _isDebug = !_isDebug;
-        }
-
-        if (IsKeyPressed(KeyboardKey.X))
-        {
-            Game.GameState.IsPaused = !Game.GameState.IsPaused;
-        }
-
-        if (IsKeyPressed(KeyboardKey.Nine))
-        {
-            Game.GameState.AlterTimeScale(false);
-        }
-        if (IsKeyPressed(KeyboardKey.Zero))
-        {
-            Game.GameState.AlterTimeScale(true);
         }
 
         _camera.Target = Game.Player.Position;
