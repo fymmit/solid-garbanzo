@@ -6,6 +6,24 @@ namespace Infrastructure;
 
 public class GraphicsProvider : IGraphicsProvider
 {
+    private List<SpriteInfo> _sprites = new();
+
+    public void LoadSprite(string filePath)
+    {
+        var texture = Raylib.LoadTexture(filePath);
+        var width = (int)texture.Dimensions.X;
+        var height = (int)texture.Dimensions.Y;
+        var spriteInfo = new SpriteInfo
+        {
+            // TODO: spriteId from somewhere. maybe just use file name as the id?
+            Texture = texture,
+            Width = width,
+            Height = height
+        };
+
+        _sprites.Add(spriteInfo);
+    }
+
     public void DrawCircle(Vector2 center, float radius, byte r, byte g, byte b, byte a, bool hasBorder)
     {
         var color = new Color(r, g, b, a);
@@ -33,8 +51,26 @@ public class GraphicsProvider : IGraphicsProvider
         }
     }
 
-    public void DrawSprite(Vector2 center, int textureId)
+    public void DrawSprite(int spriteId, Vector2 center, float scale, float rotation)
     {
-        throw new NotImplementedException();
+        SpriteInfo? spriteInfo = _sprites.SingleOrDefault(t => t.SpriteId == spriteId);
+
+        if (spriteInfo is null)
+        {
+            return;
+        }
+
+        var texture = spriteInfo.Texture;
+        var x = (int)center.X - texture.Width / 2;
+        var y = (int)center.Y - texture.Height / 2;
+        Raylib.DrawTexture(texture, x, y, Color.White);
     }
+}
+
+internal record SpriteInfo
+{
+    internal int SpriteId;
+    internal Texture2D Texture;
+    internal int Width;
+    internal int Height;
 }
