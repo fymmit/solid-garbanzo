@@ -7,6 +7,11 @@ public class SpiderWeb : Entity
         Radius = 36f;
         Attach<WebBehaviour>();
     }
+
+    public override void Render()
+    {
+        Gfx.Renderer.DrawCircle(Position, Radius, 150, 150, 150, 255, false);
+    }
 }
 
 public class WebBehaviour : Behaviour

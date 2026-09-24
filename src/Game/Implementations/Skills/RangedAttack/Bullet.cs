@@ -9,6 +9,11 @@ public class Bullet : Entity
         Radius = 12f;
         Attach<BulletBehaviour>();
     }
+
+    public override void Render()
+    {
+        Gfx.Renderer.DrawCircle(Position, Radius, 50, 50, 50, 255, true);
+    }
 }
 
 public class BulletBehaviour : Behaviour

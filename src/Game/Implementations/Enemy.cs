@@ -11,6 +11,11 @@ public class Enemy : Entity
         Attach<EnemyBehaviour>();
         Attach<MovementBehaviour>();
     }
+
+    public override void Render()
+    {
+        Gfx.Renderer.DrawPoly(Position, 3, Radius, Rotation, 255, 0, 0, 255, true);
+    }
 }
 
 public class EnemyBehaviour : Behaviour, IDamageable, IHarmful

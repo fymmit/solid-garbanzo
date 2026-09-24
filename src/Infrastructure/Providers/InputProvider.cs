@@ -22,7 +22,7 @@ public class InputProvider : IInputProvider
         return new Input
         {
             Movement = movement,
-            PausePressed = Raylib.IsKeyPressed(KeyboardKey.X),
+            PausePressed = Raylib.IsKeyPressed(KeyboardKey.P),
             TimescaleDecreasePressed = Raylib.IsKeyPressed(KeyboardKey.Nine),
             TimescaleIncreasePressed = Raylib.IsKeyPressed(KeyboardKey.Zero)
         };

@@ -8,6 +8,7 @@ public sealed class GameRuntime
     public HUD Hud { get; } = new();
     public GameState GameState = new();
     private IInputProvider _inputProvider = new InputProvider();
+    internal static IGraphicsProvider Gfx = new GraphicsProvider();
 
     public void Initialize()
     {

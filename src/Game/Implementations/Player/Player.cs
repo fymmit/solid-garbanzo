@@ -13,4 +13,9 @@ public class Player : Entity
         Attach<AutoTargeting>();
         Attach<Skillbar>();
     }
+
+    public override void Render()
+    {
+        Gfx.Renderer.DrawCircle(Position, Radius, 50, 200, 255, 255, true);
+    }
 }

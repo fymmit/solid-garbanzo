@@ -41,6 +41,15 @@ public abstract class Entity
         }
     }
 
+    public virtual void Render() { }
+    public void DebugRender()
+    {
+        foreach (var component in Components)
+        {
+            component.DebugRender();
+        }
+    }
+
     protected void Attach(Behaviour behaviour)
     {
         Components.Add(behaviour);

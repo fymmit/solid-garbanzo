@@ -34,6 +34,14 @@ public class AutoTargeting : Behaviour
         }
     }
 
+    public override void DebugRender()
+    {
+        if (_target is not null)
+        {
+            Gfx.Renderer.DrawLine(Parent.Position, _target.Position, 255, 255, 0, 255);
+        }
+    }
+
     void OnDeathEvent(Entity? target)
     {
         if (target == _target)

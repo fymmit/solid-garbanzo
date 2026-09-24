@@ -78,7 +78,7 @@ internal static class Program
         // var aimPosition = GetScreenToWorld2D(GetMousePosition(), _camera);
         Game.Update(GetFrameTime());
 
-        if (IsKeyPressed(KeyboardKey.P))
+        if (IsKeyPressed(KeyboardKey.F3))
         {
             _isDebug = !_isDebug;
         }
@@ -97,55 +97,19 @@ internal static class Program
         var prioritySortedEntities = EntityManager.Entities.OrderBy(e => e.DrawPriority);
         foreach (var entity in prioritySortedEntities)
         {
-            DrawEntity(entity);
+            entity.Render();
+        }
+        if (_isDebug)
+        {
+            foreach (var entity in prioritySortedEntities)
+            {
+                entity.DebugRender();
+            }
         }
 
         EndMode2D();
         DrawHud();
         EndDrawing();
-    }
-
-    private static void DrawEntity(Entity entity)
-    {
-        switch (entity)
-        {
-            case Player:
-                var texture = _textures[0];
-                var x = (int)entity.Position.X - texture.Width / 2;
-                var y = (int)entity.Position.Y - texture.Height / 2;
-                DrawTexture(texture.Texture, x, y, Color.White);
-                if (_isDebug)
-                {
-                    DrawCircleLines((int)entity.Position.X, (int)entity.Position.Y, entity.Radius, Color.Green);
-                }
-                break;
-            case Obstacle:
-                DrawCircle((int)entity.Position.X, (int)entity.Position.Y, entity.Radius, Color.Pink);
-                break;
-            case Enemy:
-                DrawPoly(entity.Position, 3, entity.Radius, entity.Rotation, Color.Red);
-                DrawPolyLines(entity.Position, 3, entity.Radius, entity.Rotation, Color.Black);
-                break;
-            case Bullet:
-                DrawCircle((int)entity.Position.X, (int)entity.Position.Y, entity.Radius, Color.Black);
-                break;
-            case SpiderWeb:
-                DrawCircle((int)entity.Position.X, (int)entity.Position.Y, entity.Radius, Color.Gray);
-                break;
-            case BloodParticle:
-                var particle = (BloodParticle)entity;
-                var opacity = 1f;
-                var size = 32f;
-                if (particle.Timer is not null)
-                {
-                    var percentage = particle.Timer.Duration / particle.Timer.OriginalDuration;
-                    opacity = percentage;
-                    size = (1 - percentage) * 16f + 16f;
-                }
-                var color = new Color(255, 0, 0, (opacity));
-                DrawPoly(entity.Position, 6, size, 0, color);
-                break;
-        }
     }
 
     private static void DrawHud()
@@ -163,6 +127,13 @@ internal static class Program
 
         DrawRectangle(596, 40, 120, 24, Color.Black);
         DrawText($"Timescale: {Game.GameState.TimeScale.ToString("N2")}", 600, 44, 16, Color.White);
+
+        if (_isDebug)
+        {
+            DrawRectangle(596, 70, 120, 24, Color.Black);
+            DrawText("Debug", 600, 74, 16, Color.White);
+
+        }
 
         // TODO: rethink cooldown drawing with the new Timers implementation
 
