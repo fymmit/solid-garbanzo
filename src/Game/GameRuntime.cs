@@ -1,5 +1,4 @@
 using Core;
-using Infrastructure;
 using UI;
 
 public sealed class GameRuntime
@@ -7,7 +6,6 @@ public sealed class GameRuntime
     public Player Player { get; private set; } = null!;
     public HUD Hud { get; } = new();
     public GameState GameState = new();
-    private IInputProvider _inputProvider = new InputProvider();
 
     public void Initialize()
     {
@@ -18,19 +16,19 @@ public sealed class GameRuntime
 
     public void Update(float delta)
     {
-        CurrentInput.Value = _inputProvider.GetInput();
+        GameInput.GetInput();
 
-        if (CurrentInput.Value.PausePressed)
+        if (GameInput.CurrentInput.PausePressed)
         {
             GameState.IsPaused = !GameState.IsPaused;
         }
 
-        if (CurrentInput.Value.TimescaleDecreasePressed)
+        if (GameInput.CurrentInput.TimescaleDecreasePressed)
         {
             GameState.AlterTimeScale(false);
         }
 
-        if (CurrentInput.Value.TimescaleIncreasePressed)
+        if (GameInput.CurrentInput.TimescaleIncreasePressed)
         {
             GameState.AlterTimeScale(true);
         }

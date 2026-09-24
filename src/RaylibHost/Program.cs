@@ -13,7 +13,7 @@ internal static class Program
     private static readonly GameRuntime Game = new();
     private static Camera2D _camera;
     private static Texture2D _texture;
-    private static bool _isDebug;
+    private static bool _isDebug = false;
 
     private static List<TextureInfo> _textures = [];
 
@@ -36,6 +36,10 @@ internal static class Program
 
 #if !BROWSER_WASM
         SetTargetFPS(150);
+#endif
+
+#if DEBUG
+        _isDebug = true;
 #endif
 
         var image = GenImageChecked(1000, 1000, 32, 32, Color.DarkGray, Color.LightGray);
@@ -63,8 +67,6 @@ internal static class Program
             Offset = new Vector2(WindowWidth / 2, WindowHeight / 2),
             Zoom = 1f
         };
-
-        _isDebug = false;
     }
 
     internal static void UpdateFrame()

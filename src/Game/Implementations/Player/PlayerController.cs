@@ -13,7 +13,7 @@ internal class PlayerController : Behaviour
 
     public override void Update(float delta)
     {
-        var direction = CurrentInput.Value.Movement;
+        var direction = GameInput.CurrentInput.Movement;
 
         if (direction != Vector2.Zero)
         {
@@ -23,5 +23,11 @@ internal class PlayerController : Behaviour
         var movement = direction * delta * _speed;
 
         _movementBehaviour?.Move(movement);
+    }
+
+    public override void DebugRender()
+    {
+        var mousePos = GameInput.Provider.GetMouseWorldPosition(Parent.Position);
+        Gfx.Renderer.DrawLine(Parent.Position, mousePos, 0, 255, 0, 255);
     }
 }

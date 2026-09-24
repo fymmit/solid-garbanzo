@@ -27,4 +27,16 @@ public class InputProvider : IInputProvider
             TimescaleIncreasePressed = Raylib.IsKeyPressed(KeyboardKey.Zero)
         };
     }
+
+    public Vector2 GetMouseScreenPosition()
+    {
+        return Raylib.GetMousePosition();
+    }
+
+    public Vector2 GetMouseWorldPosition(Vector2 offset)
+    {
+        var screenCenter = Raylib.GetScreenCenter();
+        var mouseScreenPosition = GetMouseScreenPosition();
+        return offset + mouseScreenPosition - screenCenter;
+    }
 }

@@ -1,6 +1,13 @@
 using Core;
+using Infrastructure;
 
-internal static class CurrentInput
+internal static class GameInput
 {
-    public static Input Value { get; set; }
+    internal static IInputProvider Provider = new InputProvider();
+    internal static Input CurrentInput;
+
+    internal static void GetInput()
+    {
+        CurrentInput = Provider.GetInput();
+    }
 }
