@@ -1,10 +1,9 @@
 using Core;
 
-public class BloodParticle : Entity
+public class BloodParticle : Particle
 {
     public BloodParticle()
     {
-        DrawPriority = 1;
-        Timers.CreateTimer(3f, () => Destroy());
+        Timer = Timers.CreateTimer(3f, () => Destroy());
     }
 }

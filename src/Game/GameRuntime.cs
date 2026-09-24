@@ -6,7 +6,7 @@ public sealed class GameRuntime
 {
     public Player Player { get; private set; } = null!;
     public HUD Hud { get; } = new();
-    public GameState GameState = new(false);
+    public GameState GameState = new();
     private IInputProvider _inputProvider = new InputProvider();
 
     public void Initialize()
@@ -54,9 +54,9 @@ public sealed class GameRuntime
     }
 }
 
-public struct GameState(bool isPaused)
+public struct GameState()
 {
-    public bool IsPaused { get; internal set; } = isPaused;
+    public bool IsPaused { get; internal set; } = false;
     public float TimeScale { get; private set; } = 1;
 
     internal void AlterTimeScale(bool positive)

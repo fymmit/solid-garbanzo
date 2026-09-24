@@ -69,6 +69,6 @@ public class EnemySpawnerBehaviour : Behaviour
     public override void OnDestroy()
     {
         DeathEventChannel.DeathEvent -= OnDeath;
-        Timers.RemoveTimer(_timer);
+        _timer.Remove();
     }
 }

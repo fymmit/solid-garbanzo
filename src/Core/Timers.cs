@@ -32,13 +32,16 @@ public static class Timers
 
     }
 
-    public static void RemoveTimer(TimerInstance? timer)
+    public static void Remove(this TimerInstance? timer)
     {
-        TimerInstances.Remove(timer);
+        if (timer is not null)
+        {
+            TimerInstances.Remove(timer);
+        }
     }
 }
 
-public class Timer : Entity
+internal class Timer : Entity
 {
     public Timer()
     {
@@ -46,7 +49,7 @@ public class Timer : Entity
     }
 }
 
-public class TimerBehaviour : Behaviour
+internal class TimerBehaviour : Behaviour
 {
     public override void Update(float delta)
     {
@@ -77,8 +80,8 @@ public class TimerBehaviour : Behaviour
 
 public record TimerInstance
 {
-    internal float Duration;
-    internal float OriginalDuration;
+    public float Duration { get; internal set; }
+    public float OriginalDuration { get; internal set; }
     internal bool IsInterval;
     internal Action Callback = null!;
 }

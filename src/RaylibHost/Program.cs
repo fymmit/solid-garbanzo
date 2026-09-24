@@ -133,23 +133,17 @@ internal static class Program
                 DrawCircle((int)entity.Position.X, (int)entity.Position.Y, entity.Radius, Color.Gray);
                 break;
             case BloodParticle:
-                // TODO: rethink the following logic with the new Timers implementation
-
-                // var duration = entity.GetComponent<Duration>();
-                // if (duration is not null)
-                // {
-                //     DrawPoly(
-                //         entity.Position,
-                //         6,
-                //         32f,
-                //         0,
-                //         new Color(
-                //             255,
-                //             0,
-                //             0,
-                //             (duration.RemainingLifeTime / duration.OriginalLifeTime)));
-                // }
-                DrawPoly(entity.Position, 6, 32f, 0, Color.Red);
+                var particle = (BloodParticle)entity;
+                var opacity = 1f;
+                var size = 32f;
+                if (particle.Timer is not null)
+                {
+                    var percentage = particle.Timer.Duration / particle.Timer.OriginalDuration;
+                    opacity = percentage;
+                    size = (1 - percentage) * 16f + 16f;
+                }
+                var color = new Color(255, 0, 0, (opacity));
+                DrawPoly(entity.Position, 6, size, 0, color);
                 break;
         }
     }
