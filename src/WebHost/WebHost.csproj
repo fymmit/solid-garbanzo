@@ -12,7 +12,6 @@
     <OutputType>Exe</OutputType>
     <NativeAot>true</NativeAot>
     <SelfContained>true</SelfContained>
-    <StartupObject>RaylibHost.Program</StartupObject>
     <WasmMainJSPath>Web/main.js</WasmMainJSPath>
     <WasmBuildNative>true</WasmBuildNative>
     <WasmAllowUndefinedSymbols>true</WasmAllowUndefinedSymbols>
@@ -29,7 +28,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Raylib-cs" Version="8.1.0" />
     <ProjectReference Include="..\Game\Game.csproj" />
   </ItemGroup>
 
