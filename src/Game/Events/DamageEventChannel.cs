@@ -8,7 +8,7 @@ public static class DamageEventChannel
 
     public static void InvokeDamageEvent(Entity? target, int damage)
     {
-        Console.WriteLine($"Damage event invoked for {target} with {damage} damage");
+        Logger.Log($"Damage event invoked for {target} with {damage} damage");
         DamageEvent?.Invoke(target, damage);
     }
 }

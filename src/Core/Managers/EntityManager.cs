@@ -1,4 +1,5 @@
 using System.Numerics;
+using Core.Events;
 
 namespace Core;
 
@@ -10,9 +11,9 @@ public static class EntityManager
     public static T Create<T>() where T : Entity, new()
     {
         var instance = new T();
-        Console.WriteLine($"{instance} created");
         _toBeAdded.Add(instance);
 
+        EntityLifetimeEventChannel.InvokeCreateEvent(instance);
         return instance;
     }
 
@@ -29,7 +30,21 @@ public static class EntityManager
         return Entities.OfType<T>();
     }
 
-    public static void ProcessPendingEntities()
+    public static void Update(float delta)
+    {
+        ProcessPendingEntities();
+
+        foreach (var entity in Entities)
+        {
+            foreach (var component in entity.Components)
+            {
+                component.Update(delta);
+            }
+        }
+
+    }
+
+    private static void ProcessPendingEntities()
     {
         Entities.RemoveAll(e => e.IsMarkedForDestruction);
 

@@ -1,4 +1,5 @@
 using System.Numerics;
+using Core.Events;
 
 namespace Core;
 
@@ -33,7 +34,7 @@ public abstract class Entity
         }
 
         IsMarkedForDestruction = true;
-        Console.WriteLine($"{this} destroyed");
+        EntityLifetimeEventChannel.InvokeDestroyEvent(this);
 
         foreach (var component in Components)
         {

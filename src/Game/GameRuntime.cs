@@ -4,7 +4,7 @@ using UI;
 public sealed class GameRuntime
 {
     public Player Player { get; private set; } = null!;
-    public HUD Hud { get; } = new();
+    private HUD? _hud;
     private GameState _state = new();
 
     public void Initialize()
@@ -21,6 +21,7 @@ public sealed class GameRuntime
         }
 
         Player = EntityManager.Create<Player>();
+        _hud = new(Player);
         EntityManager.Create<EnemySpawner>();
         EntityManager.Create<Obstacle>(new(100, 100));
     }
@@ -53,7 +54,7 @@ public sealed class GameRuntime
     {
         Update(delta);
         Gfx.Renderer.SetCameraPosition(Player.Position);
-        Gfx.Renderer.Draw(_state.IsDebug, () => Hud.Draw(_state));
+        Gfx.Renderer.Draw(_state.IsDebug, () => _hud?.Draw(_state));
     }
 
     private void Update(float delta)

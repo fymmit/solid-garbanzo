@@ -8,8 +8,11 @@ public class HUD
     public int HealthBarPercentage { get; private set; } = 100;
     public int KillCount { get; private set; } = 0;
 
-    public HUD()
+    private Player _player;
+
+    public HUD(Player player)
     {
+        _player = player;
         DamageEventChannel.DamageEvent += OnDamage;
         DeathEventChannel.DeathEvent += OnDeath;
     }
@@ -39,24 +42,26 @@ public class HUD
 
         }
 
-        // TODO: rethink cooldown drawing with the new Timers implementation
+        var skillbar = _player.GetComponent<Skillbar>();
+        if (skillbar is not null)
+        {
+            for (var i = 0; i < skillbar.Skills.Count; i++)
+            {
+                var skill = skillbar.Skills[i];
+                var cd = skill.CooldownTimer;
+                var barWidth = 120;
+                var barHeight = 30;
+                var paddingOffset = 8;
+                var remainingCdBarWidth = cd is null
+                    ? barWidth
+                    : barWidth - (barWidth * (cd.Duration / cd.OriginalDuration));
+                var x = i * 140 + 10;
 
-        // var skillbar = Game.Player.GetComponent<Skillbar>();
-        // if (skillbar is not null)
-        // {
-        //     for (var i = 0; i < skillbar.Skills.Count; i++)
-        //     {
-        //         var skill = skillbar.Skills[i];
-        //         var cd = skill.GetComponent<Cooldown>();
-        //         if (cd is not null)
-        //         {
-        //             var text = cd.IsReady() ? "Ready" : cd.RemainingCooldown.ToString("N1");
-        //             var x = i * 140 + 10;
-        //             DrawRectangle(x, GetScreenHeight() - 50, 120, 30, Color.Black);
-        //             DrawText(text, x + 4, GetScreenHeight() - 46, 24, Color.White);
-        //         }
-        //     }
-        // }
+                Gfx.Renderer.DrawRectangle(new(x, 400), new(barWidth, barHeight + 40), 0, 0, 0, 255, false);
+                Gfx.Renderer.DrawText(skill.Name, new(x + 4, 404), 16, 255, 255, 255, 255);
+                Gfx.Renderer.DrawRectangle(new(x + 4, 444), new(remainingCdBarWidth - paddingOffset, barHeight - paddingOffset), 255, 255, 255, 255, false);
+            }
+        }
     }
 
     private void OnDamage(Entity? target, int amount)

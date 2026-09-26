@@ -8,7 +8,7 @@ public static class DeathEventChannel
 
     public static void InvokeDeathEvent(Entity? target)
     {
-        Console.WriteLine($"{target} died");
+        Logger.Log($"{target} died");
         DeathEvent?.Invoke(target);
     }
 }

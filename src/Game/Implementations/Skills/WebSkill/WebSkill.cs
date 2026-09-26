@@ -3,17 +3,15 @@ using Core;
 
 public class WebSkill : SkillEntity
 {
-    private const float COOLDOWN = 5f;
-    private bool _isReady = true;
-
-    public override void Invoke(Vector2 initialPosition, Vector2 targetPosition)
+    public WebSkill()
     {
-        if (_isReady)
-        {
-            _isReady = false;
-            var web = EntityManager.Create<SpiderWeb>(targetPosition);
-            Timers.CreateTimer(3f, () => web.Destroy());
-            Timers.CreateTimer(COOLDOWN, () => _isReady = true);
-        }
+        _cooldown = 5f;
+        Name = "Web";
+    }
+
+    protected override void InvokeSkill(Vector2 initialPosition, Vector2 targetPosition)
+    {
+        var web = EntityManager.Create<SpiderWeb>(targetPosition);
+        Timers.CreateTimer(3f, () => web.Destroy());
     }
 }
