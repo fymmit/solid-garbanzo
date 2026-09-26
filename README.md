@@ -2,8 +2,9 @@
 
 A game for desktop and the browser.
 
-`src/Game` contains the game rules, `src/Core` contains the entity framework, and
-`src/RaylibHost` handles Raylib input, rendering, window management, and hosting.
+`src/Game` contains the game rules and desktop entry point, while `src/Core`
+provides the entity framework and Raylib-backed input and rendering. `src/WebHost`
+hosts the game in the browser through WebAssembly.
 
 ## Run locally
 
