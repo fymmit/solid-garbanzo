@@ -26,7 +26,7 @@ jobs:
         run: dotnet workload install wasm-tools
 
       - name: Publish WebAssembly build
-        run: dotnet publish src/RaylibHost/RaylibHost.csproj -c Release -r browser-wasm --self-contained
+        run: dotnet publish src/WebHost/WebHost.csproj -c Release -r browser-wasm --self-contained
 
       - name: Install Butler
         run: |
@@ -39,5 +39,5 @@ jobs:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
         run: |
           butler/butler push --if-changed \
-            src/RaylibHost/bin/Release/net10.0/browser-wasm/AppBundle \
+            src/WebHost/bin/Release/net10.0/browser-wasm/AppBundle \
             fymmit/solid-garbanzo:html5

@@ -8,7 +8,7 @@ A game for desktop and the browser.
 ## Run locally
 
 ```sh
-dotnet run --project src/RaylibHost/RaylibHost.csproj
+./run_game.sh
 ```
 
 ## Build the web version
@@ -16,7 +16,7 @@ dotnet run --project src/RaylibHost/RaylibHost.csproj
 The browser version uses Raylib's WebAssembly/WebGL backend through Raylib-cs.
 
 ```sh
-dotnet publish src/RaylibHost/RaylibHost.csproj -c Release -r browser-wasm --self-contained
+dotnet publish src/WebHost/WebHost.csproj -c Release -r browser-wasm --self-contained
 ```
 
 Deploy the complete contents of `src/RaylibHost/bin/Release/net10.0/browser-wasm/AppBundle/` to a static web host. The output must be served over HTTP(S), not opened directly from the filesystem.
@@ -24,7 +24,7 @@ Deploy the complete contents of `src/RaylibHost/bin/Release/net10.0/browser-wasm
 To test the published bundle locally:
 
 ```sh
-bunx serve src/RaylibHost/bin/Release/net10.0/browser-wasm/AppBundle
+bunx serve src/WebHost/bin/Release/net10.0/browser-wasm/AppBundle
 ```
 
 ## Deploy to itch.io
