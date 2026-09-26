@@ -43,7 +43,7 @@ internal static class Program
         var image = GenImageChecked(1000, 1000, 32, 32, Color.DarkGray, Color.LightGray);
         _texture = LoadTextureFromImage(image);
 
-        Game.Initialize();
+        // Game.Initialize();
 
         _camera = new Camera2D
         {
@@ -61,7 +61,7 @@ internal static class Program
 
     private static void Update()
     {
-        Game.Update(GetFrameTime());
+        // Game.Update(GetFrameTime());
 
         if (IsKeyPressed(KeyboardKey.F3))
         {
@@ -111,7 +111,7 @@ internal static class Program
         DrawText($"FPS: {GetFPS()}", 600, 14, 16, Color.White);
 
         DrawRectangle(596, 40, 120, 24, Color.Black);
-        DrawText($"Timescale: {Game.GameState.TimeScale.ToString("N2")}", 600, 44, 16, Color.White);
+        // DrawText($"Timescale: {Game.State.TimeScale.ToString("N2")}", 600, 44, 16, Color.White);
 
         if (_isDebug)
         {

@@ -21,6 +21,7 @@ public class RaylibInputProvider : IInputProvider
         return new InputState
         {
             Movement = movement,
+            DebugTogglePressed = Raylib.IsKeyPressed(KeyboardKey.O),
             PausePressed = Raylib.IsKeyPressed(KeyboardKey.P),
             TimescaleDecreasePressed = Raylib.IsKeyPressed(KeyboardKey.Nine),
             TimescaleIncreasePressed = Raylib.IsKeyPressed(KeyboardKey.Zero),

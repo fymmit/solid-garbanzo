@@ -1,3 +1,3 @@
 #!/bin/bash
 
-dotnet run --project src/RaylibHost/RaylibHost.csproj
+dotnet run --project src/Game/Game.csproj

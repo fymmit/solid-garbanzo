@@ -5,7 +5,67 @@ namespace Core.Providers;
 
 public class RaylibGraphicsProvider : IGraphicsProvider
 {
+    private Camera2D _camera;
     private List<SpriteInfo> _sprites = new();
+
+    public void CreateGameWindow(int width, int height)
+    {
+        Raylib.InitWindow(width, height, "solid-garbanzo");
+
+#if !BROWSER_WASM
+        Raylib.SetTargetFPS(150);
+#endif
+
+        _camera = new Camera2D
+        {
+            Offset = new Vector2(width / 2, height / 2),
+            Zoom = 1f
+        };
+    }
+
+    public void StartRenderingLoop(Action<float> UpdateCallback)
+    {
+        while (!Raylib.WindowShouldClose())
+        {
+            UpdateCallback(Raylib.GetFrameTime());
+        }
+    }
+
+    public void Draw(bool isDebug)
+    {
+        Raylib.BeginDrawing();
+        Raylib.BeginMode2D(_camera);
+
+        Raylib.ClearBackground(Color.White);
+
+        var prioritySortedEntities = EntityManager.Entities.OrderBy(e => e.DrawPriority);
+        foreach (var entity in prioritySortedEntities)
+        {
+            entity.Render();
+        }
+
+        if (isDebug)
+        {
+            foreach (var entity in prioritySortedEntities)
+            {
+                entity.DebugRender();
+            }
+        }
+
+        Raylib.EndMode2D();
+        // DrawHud();
+        Raylib.EndDrawing();
+    }
+
+    public void SetCameraPosition(Vector2 position)
+    {
+        _camera.Target = position;
+    }
+
+    public void CloseGameWindow()
+    {
+        Raylib.CloseWindow();
+    }
 
     public void LoadSprite(string filePath)
     {

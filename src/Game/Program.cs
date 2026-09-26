@@ -1,14 +1,12 @@
-var game = new GameRuntime();
-
-var frameTime = 0.1f;
-
-var simulationDuration = 60f;
-
-var steps = simulationDuration / frameTime;
-
-game.Initialize();
-
-for (var i = 0; i < steps; i++)
+public static class Program
 {
-    game.Update(frameTime);
+    [STAThread]
+    public static void Main()
+    {
+        bool.TryParse(Environment.GetEnvironmentVariable("SIMULATION"), out var simulation);
+
+        var game = new GameRuntime();
+
+        game.Run(simulation);
+    }
 }
