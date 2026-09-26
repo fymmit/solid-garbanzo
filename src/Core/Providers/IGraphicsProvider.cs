@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace Core;
+namespace Core.Providers;
 
 public interface IGraphicsProvider
 {

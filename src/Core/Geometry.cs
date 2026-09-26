@@ -1,6 +1,6 @@
 using System.Numerics;
 
-internal static class Geometry
+public static class Geometry
 {
     public static bool CheckCollisionCircles(Vector2 firstPosition, float firstRadius, Vector2 secondPosition, float secondRadius)
     {

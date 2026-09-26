@@ -1,10 +1,9 @@
-using Core;
 using Raylib_cs;
 using System.Numerics;
 
-namespace Infrastructure;
+namespace Core.Providers;
 
-public class GraphicsProvider : IGraphicsProvider
+public class RaylibGraphicsProvider : IGraphicsProvider
 {
     private List<SpriteInfo> _sprites = new();
 

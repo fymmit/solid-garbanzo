@@ -1,10 +1,9 @@
-using Core;
 using Raylib_cs;
 using System.Numerics;
 
-namespace Infrastructure;
+namespace Core.Providers;
 
-public class InputProvider : IInputProvider
+public class RaylibInputProvider : IInputProvider
 {
     public InputState GetInput(Vector2 cameraPosition)
     {
