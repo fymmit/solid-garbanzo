@@ -27,6 +27,6 @@ internal class PlayerController : Behaviour
 
     public override void DebugRender()
     {
-        Gfx.Renderer.DrawLine(Parent.Position, Input.Current.MouseWorldPosition, 0, 255, 0, 255);
+        Gfx.Provider.DrawLine(Parent.Position, Input.Current.MouseWorldPosition, 0, 255, 0, 255);
     }
 }

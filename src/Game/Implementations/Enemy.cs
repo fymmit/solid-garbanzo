@@ -14,7 +14,7 @@ public class Enemy : Entity
 
     public override void Render()
     {
-        Gfx.Renderer.DrawPoly(Position, 3, Radius, Rotation, 255, 0, 0, 255, true);
+        Gfx.Provider.DrawPoly(Position, 3, Radius, Rotation, 255, 0, 0, 255, true);
     }
 }
 

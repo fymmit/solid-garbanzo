@@ -5,7 +5,7 @@ namespace Core.Providers;
 
 public class RaylibInputProvider : IInputProvider
 {
-    public InputState GetInput(Vector2 cameraPosition)
+    public InputState GetInput()
     {
         var movement = new Vector2();
         if (Raylib.IsKeyDown(KeyboardKey.A)) movement.X += -1;
@@ -26,7 +26,7 @@ public class RaylibInputProvider : IInputProvider
             TimescaleDecreasePressed = Raylib.IsKeyPressed(KeyboardKey.Nine),
             TimescaleIncreasePressed = Raylib.IsKeyPressed(KeyboardKey.Zero),
             MouseScreenPosition = GetMouseScreenPosition(),
-            MouseWorldPosition = GetMouseWorldPosition(cameraPosition)
+            MouseWorldPosition = GetMouseWorldPosition(Gfx.Provider.CameraPosition)
         };
     }
 

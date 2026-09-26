@@ -2,5 +2,5 @@ using Core.Providers;
 
 public static class Gfx
 {
-    public static IGraphicsProvider Renderer = new RaylibGraphicsProvider();
+    public static IGraphicsProvider Provider = new RaylibGraphicsProvider();
 }

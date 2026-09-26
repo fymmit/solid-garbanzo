@@ -8,6 +8,15 @@ public class RaylibGraphicsProvider : IGraphicsProvider
     private Camera2D _camera;
     private List<SpriteInfo> _sprites = new();
 
+    public Vector2 CameraPosition
+    {
+        get => _camera.Target;
+        set
+        {
+            _camera.Target = value;
+        }
+    }
+
     public void CreateGameWindow(int width, int height)
     {
         Raylib.InitWindow(width, height, "solid-garbanzo");
@@ -67,10 +76,6 @@ public class RaylibGraphicsProvider : IGraphicsProvider
         Raylib.EndDrawing();
     }
 
-    public void SetCameraPosition(Vector2 position)
-    {
-        _camera.Target = position;
-    }
 
     public void LoadSprite(string filePath)
     {

@@ -13,11 +13,11 @@ public sealed class GameRuntime
         _state.IsDebug = true;
 #endif
 
-        Gfx.Renderer.CreateGameWindow(800, 480);
+        Gfx.Provider.CreateGameWindow(800, 480);
 
         foreach (var asset in Directory.EnumerateFiles(Path.Combine(AppContext.BaseDirectory, "Assets")))
         {
-            Gfx.Renderer.LoadSprite(asset);
+            Gfx.Provider.LoadSprite(asset);
         }
 
         Player = EntityManager.Create<Player>();
@@ -32,7 +32,7 @@ public sealed class GameRuntime
 
         if (!isSimulation)
         {
-            Gfx.Renderer.StartRenderingLoop(UpdateFrame);
+            Gfx.Provider.StartRenderingLoop(UpdateFrame);
         }
         else
         {
@@ -53,13 +53,13 @@ public sealed class GameRuntime
     public void UpdateFrame(float delta)
     {
         Update(delta);
-        Gfx.Renderer.SetCameraPosition(Player.Position);
-        Gfx.Renderer.Draw(_state.IsDebug, () => _hud?.Draw(_state));
+        Gfx.Provider.CameraPosition = Player.Position;
+        Gfx.Provider.Draw(_state.IsDebug, () => _hud?.Draw(_state));
     }
 
     private void Update(float delta)
     {
-        Input.GetInput(Player.Position);
+        Input.GetInput();
 
         if (Input.Current.DebugTogglePressed)
         {

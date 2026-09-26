@@ -18,6 +18,6 @@ public class BloodParticle : Particle
             size = (1 - percentage) * 16f + 16f;
         }
 
-        Gfx.Renderer.DrawPoly(Position, 6, size, 0, 255, 0, 0, opacity, false);
+        Gfx.Provider.DrawPoly(Position, 6, size, 0, 255, 0, 0, opacity, false);
     }
 }

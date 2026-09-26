@@ -10,7 +10,7 @@ public class SpiderWeb : Entity
 
     public override void Render()
     {
-        Gfx.Renderer.DrawCircle(Position, Radius, 150, 150, 150, 255, false);
+        Gfx.Provider.DrawCircle(Position, Radius, 150, 150, 150, 255, false);
     }
 }
 

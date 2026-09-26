@@ -9,6 +9,6 @@ public class Obstacle : Entity
 
     public override void Render()
     {
-        Gfx.Renderer.DrawCircle(Position, Radius, 50, 180, 50, 255, true);
+        Gfx.Provider.DrawCircle(Position, Radius, 50, 180, 50, 255, true);
     }
 }

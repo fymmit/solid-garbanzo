@@ -18,6 +18,6 @@ public class Player : Entity
 
     public override void Render()
     {
-        Gfx.Renderer.DrawSprite(SPRITE_ID, Position, 1f, 0f);
+        Gfx.Provider.DrawSprite(SPRITE_ID, Position, 1f, 0f);
     }
 }

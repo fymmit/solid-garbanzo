@@ -38,7 +38,7 @@ public class AutoTargeting : Behaviour
     {
         if (_target is not null)
         {
-            Gfx.Renderer.DrawLine(Parent.Position, _target.Position, 255, 255, 0, 255);
+            Gfx.Provider.DrawLine(Parent.Position, _target.Position, 255, 255, 0, 255);
         }
     }
 

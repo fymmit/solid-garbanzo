@@ -4,12 +4,12 @@ namespace Core.Providers;
 
 public interface IGraphicsProvider
 {
+    Vector2 CameraPosition { get; set; }
+
     void CreateGameWindow(int width, int height);
     void StartRenderingLoop(Action<float> UpdateCallback);
     void CloseGameWindow();
     void Draw(bool isDebug, Action? DrawHud);
-
-    void SetCameraPosition(Vector2 position);
 
     void LoadSprite(string filePath);
     void DrawCircle(Vector2 center, float radius, byte r, byte g, byte b, byte a, bool hasBorder);

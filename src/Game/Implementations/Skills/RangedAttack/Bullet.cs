@@ -12,7 +12,7 @@ public class Bullet : Entity
 
     public override void Render()
     {
-        Gfx.Renderer.DrawCircle(Position, Radius, 50, 50, 50, 255, true);
+        Gfx.Provider.DrawCircle(Position, Radius, 50, 50, 50, 255, true);
     }
 }
 
