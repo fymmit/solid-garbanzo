@@ -1,13 +1,14 @@
+using System.Numerics;
 using Core;
 using Infrastructure;
 
-internal static class GameInput
+internal static class Input
 {
     internal static IInputProvider Provider = new InputProvider();
-    internal static Input CurrentInput;
+    internal static InputState Current;
 
-    internal static void GetInput()
+    internal static void GetInput(Vector2 cameraPosition)
     {
-        CurrentInput = Provider.GetInput();
+        Current = Provider.GetInput(cameraPosition);
     }
 }

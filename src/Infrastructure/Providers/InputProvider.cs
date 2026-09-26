@@ -6,7 +6,7 @@ namespace Infrastructure;
 
 public class InputProvider : IInputProvider
 {
-    public Input GetInput()
+    public InputState GetInput(Vector2 cameraPosition)
     {
         var movement = new Vector2();
         if (Raylib.IsKeyDown(KeyboardKey.A)) movement.X += -1;
@@ -19,21 +19,23 @@ public class InputProvider : IInputProvider
             movement = Vector2.Normalize(movement);
         }
 
-        return new Input
+        return new InputState
         {
             Movement = movement,
             PausePressed = Raylib.IsKeyPressed(KeyboardKey.P),
             TimescaleDecreasePressed = Raylib.IsKeyPressed(KeyboardKey.Nine),
-            TimescaleIncreasePressed = Raylib.IsKeyPressed(KeyboardKey.Zero)
+            TimescaleIncreasePressed = Raylib.IsKeyPressed(KeyboardKey.Zero),
+            MouseScreenPosition = GetMouseScreenPosition(),
+            MouseWorldPosition = GetMouseWorldPosition(cameraPosition)
         };
     }
 
-    public Vector2 GetMouseScreenPosition()
+    private Vector2 GetMouseScreenPosition()
     {
         return Raylib.GetMousePosition();
     }
 
-    public Vector2 GetMouseWorldPosition(Vector2 offset)
+    private Vector2 GetMouseWorldPosition(Vector2 offset)
     {
         var screenCenter = Raylib.GetScreenCenter();
         var mouseScreenPosition = GetMouseScreenPosition();

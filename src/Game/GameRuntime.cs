@@ -21,19 +21,19 @@ public sealed class GameRuntime
 
     public void Update(float delta)
     {
-        GameInput.GetInput();
+        Input.GetInput(Player.Position);
 
-        if (GameInput.CurrentInput.PausePressed)
+        if (Input.Current.PausePressed)
         {
             GameState.IsPaused = !GameState.IsPaused;
         }
 
-        if (GameInput.CurrentInput.TimescaleDecreasePressed)
+        if (Input.Current.TimescaleDecreasePressed)
         {
             GameState.AlterTimeScale(false);
         }
 
-        if (GameInput.CurrentInput.TimescaleIncreasePressed)
+        if (Input.Current.TimescaleIncreasePressed)
         {
             GameState.AlterTimeScale(true);
         }

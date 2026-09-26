@@ -4,7 +4,5 @@ namespace Core;
 
 public interface IInputProvider
 {
-    Input GetInput();
-    Vector2 GetMouseScreenPosition();
-    Vector2 GetMouseWorldPosition(Vector2 offset);
+    InputState GetInput(Vector2 cameraPosition);
 }
