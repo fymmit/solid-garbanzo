@@ -7,9 +7,8 @@ public sealed class GameRuntime
     public HUD Hud { get; } = new();
     private GameState _state = new();
 
-    public void Run(bool isSimulation)
+    public void Initialize()
     {
-
 #if DEBUG
         _state.IsDebug = true;
 #endif
@@ -24,15 +23,15 @@ public sealed class GameRuntime
         Player = EntityManager.Create<Player>();
         EntityManager.Create<EnemySpawner>();
         EntityManager.Create<Obstacle>(new(100, 100));
+    }
+
+    public void Run(bool isSimulation)
+    {
+        Initialize();
 
         if (!isSimulation)
         {
-            Gfx.Renderer.StartRenderingLoop((float delta) =>
-            {
-                UpdateEntities(delta);
-                Gfx.Renderer.SetCameraPosition(Player.Position);
-                Gfx.Renderer.Draw(_state.IsDebug);
-            });
+            Gfx.Renderer.StartRenderingLoop(UpdateFrame);
         }
         else
         {
@@ -44,13 +43,20 @@ public sealed class GameRuntime
 
             for (var i = 0; i < steps; i++)
             {
-                UpdateEntities(frameTime);
+                Update(frameTime);
             }
 
         }
     }
 
-    private void UpdateEntities(float delta)
+    public void UpdateFrame(float delta)
+    {
+        Update(delta);
+        Gfx.Renderer.SetCameraPosition(Player.Position);
+        Gfx.Renderer.Draw(_state.IsDebug);
+    }
+
+    private void Update(float delta)
     {
         Input.GetInput(Player.Position);
 

@@ -1,17 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <NativeAot>true</NativeAot>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
+    <OutputType>Exe</OutputType>
+    <NativeAot>true</NativeAot>
     <SelfContained>true</SelfContained>
-    <StartupObject>RaylibHost.Web.Host</StartupObject>
+    <StartupObject>RaylibHost.Program</StartupObject>
     <WasmMainJSPath>Web/main.js</WasmMainJSPath>
     <WasmBuildNative>true</WasmBuildNative>
     <WasmAllowUndefinedSymbols>true</WasmAllowUndefinedSymbols>
@@ -39,7 +40,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(RuntimeIdentifier)' != 'browser-wasm'">
-    <Compile Remove="Web/**/*.cs" />
+    <Compile Remove="Program.cs" />
   </ItemGroup>
 
 </Project>

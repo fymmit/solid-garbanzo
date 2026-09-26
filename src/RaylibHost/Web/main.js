@@ -15,13 +15,18 @@ try {
     dotnet.instance.Module.canvas = canvas;
     await runMain();
 
-    const host = exports.RaylibHost.Web.Host;
+    const host = exports.RaylibHost.Program;
     status.hidden = true;
     canvas.focus();
 
-    function frame() {
+    let previousFrameTime;
+    function frame(timestamp) {
         requestAnimationFrame(frame);
-        host.UpdateFrame();
+        const delta = previousFrameTime === undefined
+            ? 0
+            : (timestamp - previousFrameTime) / 1000;
+        previousFrameTime = timestamp;
+        host.UpdateFrame(delta);
     }
 
     requestAnimationFrame(frame);
