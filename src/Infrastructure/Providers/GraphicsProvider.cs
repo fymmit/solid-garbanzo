@@ -10,12 +10,13 @@ public class GraphicsProvider : IGraphicsProvider
 
     public void LoadSprite(string filePath)
     {
+        var fileName = Path.GetFileName(filePath);
         var texture = Raylib.LoadTexture(filePath);
         var width = (int)texture.Dimensions.X;
         var height = (int)texture.Dimensions.Y;
         var spriteInfo = new SpriteInfo
         {
-            // TODO: spriteId from somewhere. maybe just use file name as the id?
+            SpriteId = fileName,
             Texture = texture,
             Width = width,
             Height = height
@@ -51,7 +52,7 @@ public class GraphicsProvider : IGraphicsProvider
         }
     }
 
-    public void DrawSprite(int spriteId, Vector2 center, float scale, float rotation)
+    public void DrawSprite(string spriteId, Vector2 center, float scale, float rotation)
     {
         SpriteInfo? spriteInfo = _sprites.SingleOrDefault(t => t.SpriteId == spriteId);
 
@@ -69,8 +70,8 @@ public class GraphicsProvider : IGraphicsProvider
 
 internal record SpriteInfo
 {
-    internal int SpriteId;
-    internal Texture2D Texture;
-    internal int Width;
-    internal int Height;
+    internal required string SpriteId;
+    internal required Texture2D Texture;
+    internal required int Width;
+    internal required int Height;
 }

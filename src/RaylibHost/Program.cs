@@ -15,8 +15,6 @@ internal static class Program
     private static Texture2D _texture;
     private static bool _isDebug = false;
 
-    private static List<TextureInfo> _textures = [];
-
     [STAThread]
     private static void Main()
     {
@@ -45,20 +43,6 @@ internal static class Program
         var image = GenImageChecked(1000, 1000, 32, 32, Color.DarkGray, Color.LightGray);
         _texture = LoadTextureFromImage(image);
 
-        foreach (var asset in Directory.EnumerateFiles(Path.Combine(AppContext.BaseDirectory, "assets")))
-        {
-            var texture = LoadTexture(asset);
-            var width = (int)texture.Dimensions.X;
-            var height = (int)texture.Dimensions.Y;
-            var textureInfo = new TextureInfo
-            {
-                Texture = texture,
-                Width = width,
-                Height = height
-            };
-            _textures.Add(textureInfo);
-        }
-
         Game.Initialize();
 
         _camera = new Camera2D
@@ -77,7 +61,6 @@ internal static class Program
 
     private static void Update()
     {
-        // var aimPosition = GetScreenToWorld2D(GetMousePosition(), _camera);
         Game.Update(GetFrameTime());
 
         if (IsKeyPressed(KeyboardKey.F3))
@@ -156,11 +139,4 @@ internal static class Program
         //     }
         // }
     }
-}
-
-internal struct TextureInfo
-{
-    internal Texture2D Texture;
-    internal int Width;
-    internal int Height;
 }

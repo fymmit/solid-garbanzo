@@ -35,18 +35,11 @@
   <ItemGroup Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
     <WasmExtraFilesToDeploy Include="Web/index.html" TargetPath="index.html" />
     <WasmExtraFilesToDeploy Include="Web/main.js" TargetPath="main.js" />
-    <WasmFilesToIncludeInFileSystem Include="assets/**/*" TargetPath="assets/%(RecursiveDir)%(Filename)%(Extension)" />
+    <WasmFilesToIncludeInFileSystem Include="../Game/Assets/**/*" TargetPath="Assets/%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(RuntimeIdentifier)' != 'browser-wasm'">
     <Compile Remove="Web/**/*.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="assets/**/*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
   </ItemGroup>
 
 </Project>

@@ -9,6 +9,11 @@ public sealed class GameRuntime
 
     public void Initialize()
     {
+        foreach (var asset in Directory.EnumerateFiles(Path.Combine(AppContext.BaseDirectory, "Assets")))
+        {
+            Gfx.Renderer.LoadSprite(asset);
+        }
+
         Player = EntityManager.Create<Player>();
         EntityManager.Create<EnemySpawner>();
         EntityManager.Create<Obstacle>(new(100, 100));

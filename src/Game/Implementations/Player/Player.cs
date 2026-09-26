@@ -2,6 +2,8 @@ using Core;
 
 public class Player : Entity
 {
+    private const string SPRITE_ID = "player.png";
+
     public Player()
     {
         DrawPriority = 10;
@@ -16,6 +18,6 @@ public class Player : Entity
 
     public override void Render()
     {
-        Gfx.Renderer.DrawCircle(Position, Radius, 50, 200, 255, 255, true);
+        Gfx.Renderer.DrawSprite(SPRITE_ID, Position, 1f, 0f);
     }
 }
