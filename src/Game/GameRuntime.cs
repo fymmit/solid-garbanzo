@@ -53,7 +53,7 @@ public sealed class GameRuntime
     {
         Update(delta);
         Gfx.Renderer.SetCameraPosition(Player.Position);
-        Gfx.Renderer.Draw(_state.IsDebug);
+        Gfx.Renderer.Draw(_state.IsDebug, () => Hud.Draw(_state));
     }
 
     private void Update(float delta)
@@ -85,21 +85,13 @@ public sealed class GameRuntime
             return;
         }
 
-        EntityManager.ProcessPendingEntities();
-
         var effectiveDelta = delta * _state.TimeScale;
 
-        foreach (var entity in EntityManager.Entities)
-        {
-            foreach (var component in entity.Components)
-            {
-                component.Update(effectiveDelta);
-            }
-        }
+        EntityManager.Update(effectiveDelta);
     }
 }
 
-struct GameState()
+public struct GameState()
 {
     public bool IsDebug { get; internal set; } = false;
     public bool IsPaused { get; internal set; } = false;

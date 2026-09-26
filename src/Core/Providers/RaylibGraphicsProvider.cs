@@ -31,7 +31,12 @@ public class RaylibGraphicsProvider : IGraphicsProvider
         }
     }
 
-    public void Draw(bool isDebug)
+    public void CloseGameWindow()
+    {
+        Raylib.CloseWindow();
+    }
+
+    public void Draw(bool isDebug, Action? DrawHud)
     {
         Raylib.BeginDrawing();
         Raylib.BeginMode2D(_camera);
@@ -53,18 +58,18 @@ public class RaylibGraphicsProvider : IGraphicsProvider
         }
 
         Raylib.EndMode2D();
-        // DrawHud();
+
+        if (DrawHud is not null)
+        {
+            DrawHud();
+        }
+
         Raylib.EndDrawing();
     }
 
     public void SetCameraPosition(Vector2 position)
     {
         _camera.Target = position;
-    }
-
-    public void CloseGameWindow()
-    {
-        Raylib.CloseWindow();
     }
 
     public void LoadSprite(string filePath)
@@ -125,6 +130,20 @@ public class RaylibGraphicsProvider : IGraphicsProvider
         var y = (int)center.Y - texture.Height / 2;
         Raylib.DrawTexture(texture, x, y, Color.White);
     }
+
+    public void DrawRectangle(Vector2 position, Vector2 size, byte r, byte g, byte b, byte a, bool hasBorder)
+    {
+        var color = new Color(r, g, b, a);
+        Raylib.DrawRectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y, color);
+    }
+
+    public void DrawText(string text, Vector2 position, int size, byte r, byte g, byte b, byte a)
+    {
+        var color = new Color(r, g, b, a);
+        Raylib.DrawText(text, (int)position.X, (int)position.Y, size, color);
+    }
+
+    public int GetFps() => Raylib.GetFPS();
 }
 
 internal record SpriteInfo
