@@ -1,7 +1,7 @@
 using Events;
 using Core;
 
-namespace UI;
+namespace UIElements;
 
 public class HUD
 {
@@ -9,19 +9,28 @@ public class HUD
     public int KillCount { get; private set; } = 0;
 
     private Player _player;
+    private GameState _state;
 
-    public HUD(Player player)
+    public HUD(Player player, GameState state)
     {
         _player = player;
+        _state = state;
         DamageEventChannel.DamageEvent += OnDamage;
         DeathEventChannel.DeathEvent += OnDeath;
     }
 
-    public void Draw(GameState state)
+    public void Draw()
     {
         // health bar
-        Gfx.Provider.DrawRectangle(new(8, 8), new(104, 44), 0, 0, 0, 255, false);
-        Gfx.Provider.DrawRectangle(new(10, 10), new(HealthBarPercentage, 40), 255, 0, 0, 255, false);
+        UI.ProgressBar
+        (
+            new(10, 10),
+            new(100, 40),
+            HealthBarPercentage / 100f,
+            (255, 0, 0, 255),
+            (0, 0, 0, 255),
+            2
+        );
 
         // kill counter
         Gfx.Provider.DrawRectangle(new(396, 10), new(120, 24), 0, 0, 0, 255, false);
@@ -33,9 +42,9 @@ public class HUD
 
         // timescale
         Gfx.Provider.DrawRectangle(new(596, 40), new(120, 24), 0, 0, 0, 255, false);
-        Gfx.Provider.DrawText($"Timescale: {state.TimeScale.ToString("N2")}", new(600, 44), 16, 255, 255, 255, 255);
+        Gfx.Provider.DrawText($"Timescale: {_state.TimeScale.ToString("N2")}", new(600, 44), 16, 255, 255, 255, 255);
 
-        if (state.IsDebug)
+        if (_state.IsDebug)
         {
             Gfx.Provider.DrawRectangle(new(596, 70), new(120, 24), 0, 0, 0, 255, false);
             Gfx.Provider.DrawText("Debug", new(600, 74), 16, 255, 255, 255, 255);
@@ -50,16 +59,21 @@ public class HUD
                 var skill = skillbar.Skills[i];
                 var cd = skill.CooldownTimer;
                 var barWidth = 120;
-                var barHeight = 30;
-                var paddingOffset = 8;
-                var remainingCdBarWidth = cd is null
-                    ? barWidth
-                    : barWidth - (barWidth * (cd.Duration / cd.OriginalDuration));
+                var barHeight = 24;
                 var x = i * 140 + 10;
 
-                Gfx.Provider.DrawRectangle(new(x, 400), new(barWidth, barHeight + 40), 0, 0, 0, 255, false);
+                Gfx.Provider.DrawRectangle(new(x, 400), new(barWidth, barHeight), 0, 0, 0, 255, false);
                 Gfx.Provider.DrawText(skill.Name, new(x + 4, 404), 16, 255, 255, 255, 255);
-                Gfx.Provider.DrawRectangle(new(x + 4, 444), new(remainingCdBarWidth - paddingOffset, barHeight - paddingOffset), 255, 255, 255, 255, false);
+
+                UI.ProgressBar
+                (
+                    new(x, 428),
+                    new(barWidth, barHeight),
+                    cd is null ? 1f : 1f - (cd.Duration / cd.OriginalDuration),
+                    (255, 255, 255, 255),
+                    (0, 0, 0, 255),
+                    4
+                );
             }
         }
     }

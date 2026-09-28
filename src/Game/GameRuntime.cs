@@ -1,10 +1,12 @@
 using Core;
-using UI;
+using UIElements;
 
 public sealed class GameRuntime
 {
     public Player Player { get; private set; } = null!;
     private HUD? _hud;
+    private MainMenu _mainMenu = new();
+    private PauseMenu _pauseMenu = new();
     private GameState _state = new();
 
     public void Initialize()
@@ -21,7 +23,7 @@ public sealed class GameRuntime
         }
 
         Player = EntityManager.Create<Player>();
-        _hud = new(Player);
+        _hud = new(Player, _state);
         EntityManager.Create<EnemySpawner>();
         EntityManager.Create<Obstacle>(new(100, 100));
     }
@@ -54,7 +56,7 @@ public sealed class GameRuntime
     {
         Update(delta);
         Gfx.Provider.CameraPosition = Player.Position;
-        Gfx.Provider.Draw(_state.IsDebug, () => _hud?.Draw(_state));
+        Gfx.Provider.Draw(_state.IsDebug, DrawUI);
     }
 
     private void Update(float delta)
@@ -66,9 +68,20 @@ public sealed class GameRuntime
             _state.IsDebug = !_state.IsDebug;
         }
 
-        if (Input.Current.PausePressed)
+        if (_state.Scene == Scene.MainMenu)
         {
-            _state.IsPaused = !_state.IsPaused;
+            if (Input.Current.PausePressed)
+            {
+                _state.Scene = Scene.Gameplay;
+            }
+        }
+        else
+        {
+            if (Input.Current.PausePressed)
+            {
+                _state.IsPaused = !_state.IsPaused;
+                _state.Scene = _state.IsPaused ? Scene.PauseMenu : Scene.Gameplay;
+            }
         }
 
         if (Input.Current.TimescaleDecreasePressed)
@@ -86,14 +99,34 @@ public sealed class GameRuntime
             return;
         }
 
-        var effectiveDelta = delta * _state.TimeScale;
+        if (_state.Scene == Scene.Gameplay)
+        {
+            var effectiveDelta = delta * _state.TimeScale;
+            EntityManager.Update(effectiveDelta);
+        }
+    }
 
-        EntityManager.Update(effectiveDelta);
+    private void DrawUI()
+    {
+        switch (_state.Scene)
+        {
+            case Scene.Gameplay:
+                _hud?.Draw();
+                break;
+            case Scene.MainMenu:
+                _mainMenu.Draw();
+                break;
+            case Scene.PauseMenu:
+                _hud?.Draw();
+                _pauseMenu.Draw();
+                break;
+        }
     }
 }
 
-public struct GameState()
+public class GameState()
 {
+    public Scene Scene { get; internal set; } = Scene.Gameplay;
     public bool IsDebug { get; internal set; } = false;
     public bool IsPaused { get; internal set; } = false;
     public float TimeScale { get; private set; } = 1;
@@ -102,4 +135,11 @@ public struct GameState()
     {
         TimeScale += 0.1f * (positive ? 1 : -1);
     }
+}
+
+public enum Scene
+{
+    MainMenu,
+    Gameplay,
+    PauseMenu
 }
