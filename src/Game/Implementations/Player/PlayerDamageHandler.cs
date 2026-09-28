@@ -3,6 +3,7 @@ using Events;
 
 internal class PlayerDamageHandler : Behaviour, IDamageable
 {
+    public int MaxHealth { get; private set; } = 100;
     public int Health { get; private set; } = 100;
 
     private float _invulnTime = 0;

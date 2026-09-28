@@ -15,6 +15,18 @@ public class Enemy : Entity
     public override void Render()
     {
         Gfx.Provider.DrawPoly(Position, 3, Radius, Rotation, 255, 0, 0, 255, true);
+        var damageable = GetComponent<IDamageable>();
+        if (damageable is not null)
+        {
+            UI.ProgressBar(
+                Position + new Vector2(-Radius, -40f),
+                new(Radius * 2, 10),
+                (float)damageable.Health / damageable.MaxHealth,
+                (255, 0, 0, 100),
+                (0, 0, 0, 100),
+                2
+            );
+        }
     }
 }
 
@@ -24,6 +36,7 @@ public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
 
     public int Damage => 10;
 
+    public int MaxHealth { get; private set; } = 20;
     public int Health { get; private set; } = 20;
 
     private IMovable? _movementBehaviour;
