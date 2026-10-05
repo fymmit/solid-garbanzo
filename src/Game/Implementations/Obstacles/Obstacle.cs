@@ -1,14 +1,5 @@
 using Core;
 
-public class Obstacle : Entity
+public abstract class Obstacle : Entity
 {
-    public Obstacle()
-    {
-        Radius = 16f;
-    }
-
-    public override void Render()
-    {
-        Gfx.Provider.DrawCircle(Position, Radius, 50, 180, 50, 255, true);
-    }
 }

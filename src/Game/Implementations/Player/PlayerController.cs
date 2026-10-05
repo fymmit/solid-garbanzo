@@ -1,4 +1,3 @@
-using System.Numerics;
 using Core;
 
 internal class PlayerController : Behaviour
@@ -14,11 +13,6 @@ internal class PlayerController : Behaviour
     public override void Update(float delta)
     {
         var direction = Input.Current.Movement;
-
-        if (direction != Vector2.Zero)
-        {
-            direction = Vector2.Normalize(direction);
-        }
 
         var movement = direction * delta * _speed;
 

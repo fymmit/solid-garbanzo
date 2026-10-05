@@ -9,7 +9,7 @@ internal class CollisionHandler : Behaviour
         {
             var harmful = other.GetComponent<IHarmful>();
             if (harmful is null) continue;
-            if (Geometry.CheckCollisionCircles(Parent.Position, Parent.Radius, other.Position, other.Radius))
+            if (Geometry.CheckCollision(Parent, other))
             {
                 Parent.GetComponent<IDamageable>()?.TakeDamage(harmful.Damage);
             }

@@ -37,7 +37,7 @@ public class BulletBehaviour : Behaviour
             var damageable = enemy.GetComponent<IDamageable>();
             if (damageable is not null)
             {
-                if (Geometry.CheckCollisionCircles(Parent.Position, Parent.Radius, enemy.Position, enemy.Radius))
+                if (Geometry.CheckCollision(Parent, enemy))
                 {
                     damageable.TakeDamage(10);
                     Parent.Destroy();

@@ -11,6 +11,7 @@ public abstract class Entity
     public Vector2 Position { get; set; } = new();
     public float Rotation { get; set; }
     public float Radius { get; set; }
+    public Shape Shape { get; protected set; }
 
     public int DrawPriority { get; protected set; } = 0;
 

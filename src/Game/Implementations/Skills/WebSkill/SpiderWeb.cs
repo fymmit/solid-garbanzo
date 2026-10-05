@@ -27,7 +27,7 @@ public class WebBehaviour : Behaviour
             var movementBehaviour = enemy.GetComponent<MovementBehaviour>();
             if (movementBehaviour is not null)
             {
-                if (Geometry.CheckCollisionCircles(Parent.Position, Parent.Radius, enemy.Position, enemy.Radius))
+                if (Geometry.CheckCollision(Parent, enemy))
                 {
                     if (movementBehaviour.MovementSpeedCoefficient >= 1f)
                     {
