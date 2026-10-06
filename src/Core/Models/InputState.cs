@@ -13,4 +13,5 @@ public readonly struct InputState
 
     public readonly Vector2 MouseScreenPosition { get; init; }
     public readonly Vector2 MouseWorldPosition { get; init; }
+    public readonly bool MouseLeftClicked { get; init; }
 }

@@ -26,7 +26,8 @@ public class RaylibInputProvider : IInputProvider
             TimescaleDecreasePressed = Raylib.IsKeyPressed(KeyboardKey.Nine),
             TimescaleIncreasePressed = Raylib.IsKeyPressed(KeyboardKey.Zero),
             MouseScreenPosition = GetMouseScreenPosition(),
-            MouseWorldPosition = GetMouseWorldPosition(Gfx.Provider.CameraPosition)
+            MouseWorldPosition = GetMouseWorldPosition(Gfx.Provider.CameraPosition),
+            MouseLeftClicked = Raylib.IsMouseButtonPressed(MouseButton.Left)
         };
     }
 

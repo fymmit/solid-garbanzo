@@ -18,7 +18,7 @@ public class Enemy : Entity
         var damageable = GetComponent<IDamageable>();
         if (damageable is not null)
         {
-            UI.ProgressBar(
+            UI.ProgressBar.Draw(
                 Position + new Vector2(-Radius, -40f),
                 new(Radius * 2, 10),
                 (float)damageable.Health / damageable.MaxHealth,

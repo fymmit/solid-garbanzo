@@ -22,7 +22,7 @@ public class HUD
     public void Draw()
     {
         // health bar
-        UI.ProgressBar
+        UI.ProgressBar.Draw
         (
             new(10, 10),
             new(100, 40),
@@ -30,6 +30,16 @@ public class HUD
             (255, 0, 0, 255),
             (0, 0, 0, 255),
             2
+        );
+
+        UI.Button.Draw
+        (
+            new(10, 80),
+            new(80, 40),
+            (150, 150, 150, 200),
+            (200, 200, 200, 150),
+            () => Console.WriteLine("Button pressed"),
+            null
         );
 
         // kill counter
@@ -65,7 +75,7 @@ public class HUD
                 Gfx.Provider.DrawRectangle(new(x, 400), new(barWidth, barHeight), 0, 0, 0, 255, false);
                 Gfx.Provider.DrawText(skill.Name, new(x + 4, 404), 16, 255, 255, 255, 255);
 
-                UI.ProgressBar
+                UI.ProgressBar.Draw
                 (
                     new(x, 428),
                     new(barWidth, barHeight),
