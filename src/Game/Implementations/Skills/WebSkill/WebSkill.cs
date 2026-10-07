@@ -6,6 +6,7 @@ public class WebSkill : SkillEntity
     public WebSkill()
     {
         _cooldown = 5f;
+        _range = 200f;
         Name = "Web";
     }
 

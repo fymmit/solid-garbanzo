@@ -4,14 +4,17 @@ using Events;
 
 public abstract class SkillEntity : Entity
 {
-    public TimerInstance? CooldownTimer;
     public string Name = "Skill";
+
+    public TimerInstance? CooldownTimer;
     protected float _cooldown = 0;
     private bool _isReady = true;
 
+    protected float _range = 0f;
+
     public void Invoke(Vector2 initialPosition, Vector2 targetPosition)
     {
-        if (_isReady)
+        if (_isReady && (targetPosition - initialPosition).Length() < _range)
         {
             SkillEventChannel.InvokeSkillUsedEvent(this);
             _isReady = false;

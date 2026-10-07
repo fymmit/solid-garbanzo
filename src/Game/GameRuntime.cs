@@ -24,14 +24,8 @@ public sealed class GameRuntime
 
         Player = EntityManager.Create<Player>();
         _hud = new(Player, _state);
-        // EntityManager.Create<EnemySpawner>();
-        // EntityManager.Create<Tree>(new(100, 100));
-        // EntityManager.Create<Tree>(new(200, 0));
-        // EntityManager.Create<Tree>(new(200, 50));
-        //
-        // EntityManager.Create<Wall>(new(128, 128));
-        // EntityManager.Create<Wall>(new(160, 128));
-        // EntityManager.Create<Wall>(new(192, 128));
+        EntityManager.Create<EnemySpawner>();
+        EntityManager.Create<Tree>(new(100, 100));
     }
 
     public void Run(bool isSimulation)

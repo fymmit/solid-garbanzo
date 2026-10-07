@@ -6,6 +6,7 @@ public class RangedAttack : SkillEntity
     public RangedAttack()
     {
         _cooldown = .5f;
+        _range = 300f;
         Name = "Ranged Attack";
     }
 
