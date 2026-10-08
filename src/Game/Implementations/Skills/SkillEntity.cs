@@ -12,9 +12,9 @@ public abstract class SkillEntity : Entity
 
     protected float _range = 0f;
 
-    public void Invoke(Vector2 initialPosition, Vector2 targetPosition)
+    public void Invoke(Vector2 casterPosition, Vector2 initialPosition, Vector2 targetPosition)
     {
-        if (_isReady && (targetPosition - initialPosition).Length() < _range)
+        if (_isReady && (targetPosition - casterPosition).Length() < _range)
         {
             SkillEventChannel.InvokeSkillUsedEvent(this);
             _isReady = false;

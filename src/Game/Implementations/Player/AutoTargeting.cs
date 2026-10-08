@@ -29,7 +29,7 @@ public class AutoTargeting : Behaviour
         {
             foreach (var skill in _skillbar.Skills)
             {
-                skill.Invoke(Parent.Position, _target.Position);
+                skill.Invoke(Parent.Position, Parent.Position, _target.Position);
             }
         }
     }
