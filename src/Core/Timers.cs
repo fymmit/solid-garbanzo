@@ -54,7 +54,7 @@ internal class TimerBehaviour : Behaviour
     public override void Update(float delta)
     {
         List<TimerInstance> markedForRemoval = [];
-        foreach (var timer in Timers.TimerInstances)
+        foreach (var timer in Timers.TimerInstances.ToArray())
         {
             timer.Duration -= delta;
             if (timer.Duration <= 0)

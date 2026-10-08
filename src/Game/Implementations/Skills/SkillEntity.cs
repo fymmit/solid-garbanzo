@@ -4,24 +4,36 @@ using Events;
 
 public abstract class SkillEntity : Entity
 {
-    public string Name = "Skill";
+    public string Name { get; protected set; } = "Skill";
+    public float Cooldown { get; protected set; } = 0;
+    public float CastTime { get; protected set; } = 0f;
+    public float Range { get; protected set; } = 0f;
 
     public TimerInstance? CooldownTimer;
-    protected float _cooldown = 0;
     private bool _isReady = true;
-
-    protected float _range = 0f;
 
     public void Invoke(Vector2 casterPosition, Vector2 initialPosition, Vector2 targetPosition)
     {
-        if (_isReady && (targetPosition - casterPosition).Length() < _range)
+        if (_isReady && (targetPosition - casterPosition).Length() < Range)
         {
             SkillEventChannel.InvokeSkillUsedEvent(this);
             _isReady = false;
-            InvokeSkill(initialPosition, targetPosition);
-            CooldownTimer = Timers.CreateTimer(_cooldown, () => _isReady = true);
+            if (CastTime > 0)
+            {
+                Timers.CreateTimer(CastTime, () => InvokeWithCooldown(initialPosition, targetPosition));
+            }
+            else
+            {
+                InvokeWithCooldown(initialPosition, targetPosition);
+            }
         }
     }
 
     protected virtual void InvokeSkill(Vector2 initialPosition, Vector2 targetPosition) { }
+
+    private void InvokeWithCooldown(Vector2 initialPosition, Vector2 targetPosition)
+    {
+        InvokeSkill(initialPosition, targetPosition);
+        CooldownTimer = Timers.CreateTimer(Cooldown, () => _isReady = true);
+    }
 }
