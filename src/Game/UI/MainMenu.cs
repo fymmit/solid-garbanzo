@@ -1,9 +1,18 @@
+using Events;
+
 namespace UIElements;
 
 public class MainMenu
 {
     public void Draw()
     {
-        Gfx.Provider.DrawRectangle(new(200, 200), new(400, 200), 0, 0, 0, 255, false);
+        UI.Button.Draw(
+            new(200, 200),
+            new(300, 100),
+            (200, 200, 200, 255),
+            (150, 150, 150, 255),
+            () => GameStateEventChannel.InvokeSceneChangedEvent(Scene.Gameplay),
+            null);
+        Gfx.Provider.DrawText("Start game", new(240, 240), 32, 0, 0, 0, 255);
     }
 }

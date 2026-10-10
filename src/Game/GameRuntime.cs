@@ -1,4 +1,5 @@
 using Core;
+using Events;
 using UIElements;
 
 public sealed class GameRuntime
@@ -21,6 +22,8 @@ public sealed class GameRuntime
         {
             Gfx.Provider.LoadSprite(asset);
         }
+
+        GameStateEventChannel.SceneChangedEvent += OnSceneChange;
 
         Player = EntityManager.Create<Player>();
         _hud = new(Player, _state);
@@ -80,7 +83,8 @@ public sealed class GameRuntime
             if (Input.Current.PausePressed)
             {
                 _state.IsPaused = !_state.IsPaused;
-                _state.Scene = _state.IsPaused ? Scene.PauseMenu : Scene.Gameplay;
+                var scene = _state.IsPaused ? Scene.PauseMenu : Scene.Gameplay;
+                GameStateEventChannel.InvokeSceneChangedEvent(scene);
             }
         }
 
@@ -122,11 +126,16 @@ public sealed class GameRuntime
                 break;
         }
     }
+
+    private void OnSceneChange(Scene scene)
+    {
+        _state.Scene = scene;
+    }
 }
 
 public class GameState()
 {
-    public Scene Scene { get; internal set; } = Scene.Gameplay;
+    public Scene Scene { get; internal set; } = Scene.MainMenu;
     public bool IsDebug { get; internal set; } = false;
     public bool IsPaused { get; internal set; } = false;
     public float TimeScale { get; private set; } = 1;
