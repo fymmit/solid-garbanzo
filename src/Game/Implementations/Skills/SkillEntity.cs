@@ -6,7 +6,7 @@ public abstract class SkillEntity : Entity
 {
     public string Name { get; protected set; } = "Skill";
     public float Cooldown { get; protected set; } = 0;
-    public float CastTime { get; protected set; } = 0f;
+    public float EffectDelay { get; protected set; } = 0f;
     public float Range { get; protected set; } = 0f;
 
     public TimerInstance? CooldownTimer;
@@ -18,9 +18,9 @@ public abstract class SkillEntity : Entity
         {
             SkillEventChannel.InvokeSkillUsedEvent(this);
             _isReady = false;
-            if (CastTime > 0)
+            if (EffectDelay > 0)
             {
-                Timers.CreateTimer(CastTime, () => InvokeWithCooldown(initialPosition, targetPosition));
+                Timers.CreateTimer(EffectDelay, () => InvokeWithCooldown(initialPosition, targetPosition));
             }
             else
             {
