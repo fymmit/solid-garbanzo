@@ -19,6 +19,7 @@ public class AutoTargeting : Behaviour
         {
             var closestEnemy = EntityManager
                 .Find<Enemy>()
+                .Where(e => !e.IsMarkedForDestruction)
                 .OrderBy(e => Vector2.Distance(Parent.Position, e.Position))
                 .FirstOrDefault();
 
