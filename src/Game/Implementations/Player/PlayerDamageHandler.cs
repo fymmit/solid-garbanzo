@@ -13,8 +13,8 @@ internal class PlayerDamageHandler : Behaviour, IDamageable
     {
         if (_canTakeDamage)
         {
-            DamageEventChannel.InvokeDamageEvent(Parent, damage);
             Health -= damage;
+            DamageEventChannel.InvokeDamageEvent(Parent, damage);
             _invulnTime = 0.5f;
             _canTakeDamage = false;
             if (Health <= 0)
@@ -37,4 +37,3 @@ internal class PlayerDamageHandler : Behaviour, IDamageable
         }
     }
 }
-

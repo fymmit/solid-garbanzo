@@ -21,7 +21,7 @@ public class Enemy : Entity
             UI.ProgressBar.Draw(
                 Position + new Vector2(-Radius, -40f),
                 new(Radius * 2, 10),
-                (float)damageable.Health / damageable.MaxHealth,
+                damageable.HealthPercentage,
                 (255, 0, 0, 100),
                 (0, 0, 0, 100),
                 2
@@ -64,8 +64,8 @@ public class EnemyBehaviour : Behaviour, IDamageable, IHarmful
 
     public void TakeDamage(int amount)
     {
-        DamageEventChannel.InvokeDamageEvent(Parent, amount);
         Health -= amount;
+        DamageEventChannel.InvokeDamageEvent(Parent, amount);
         if (Health <= 0)
         {
             DeathEventChannel.InvokeDeathEvent(Parent);

@@ -5,7 +5,7 @@ namespace UIElements;
 
 public class HUD
 {
-    public int HealthBarPercentage { get; private set; } = 100;
+    public float HealthBarPercentage { get; private set; } = 1f;
     public int KillCount { get; private set; } = 0;
 
     private Player _player;
@@ -26,7 +26,7 @@ public class HUD
         (
             new(10, 10),
             new(100, 40),
-            HealthBarPercentage / 100f,
+            HealthBarPercentage,
             (255, 0, 0, 255),
             (0, 0, 0, 255),
             2
@@ -45,6 +45,10 @@ public class HUD
         // kill counter
         Gfx.Provider.DrawRectangle(new(396, 10), new(120, 24), 0, 0, 0, 255, false);
         Gfx.Provider.DrawText($"Kills: {KillCount}", new(400, 14), 16, 255, 255, 255, 255);
+
+        // experience
+        Gfx.Provider.DrawRectangle(new(396, 50), new(120, 24), 0, 0, 0, 255, false);
+        Gfx.Provider.DrawText($"Exp: {_player.Experience}", new(400, 54), 16, 255, 255, 255, 255);
 
         // fps
         Gfx.Provider.DrawRectangle(new(596, 10), new(120, 24), 0, 0, 0, 255, false);
@@ -92,7 +96,11 @@ public class HUD
     {
         if (target is Player)
         {
-            HealthBarPercentage -= amount;
+            var damageable = target.GetComponent<IDamageable>();
+            if (damageable is not null)
+            {
+                HealthBarPercentage = damageable.HealthPercentage;
+            }
         }
     }
 
