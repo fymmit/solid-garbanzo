@@ -16,18 +16,21 @@ public class MovementBehaviour : Behaviour, IMovable
 
         var obstacles = EntityManager.Find<Obstacle>();
 
-        // var collisionPoint = newPosition + Vector2.Normalize(movement) * Parent.Radius;
-
         foreach (var obstacle in obstacles)
         {
+            var direction = Vector2.Normalize(Parent.Position - obstacle.Position);
             var wouldBlock = Geometry.CheckCollision(Parent, obstacle);
             if (wouldBlock)
             {
-                // FIX: this logic is dog, only works for circle to circle collision
-                var direction = Vector2.Normalize(Parent.Position - obstacle.Position);
-                var distance = Vector2.Distance(Parent.Position, obstacle.Position) - Parent.Radius - obstacle.Radius;
-                newPosition -= direction * distance;
-                // newPosition = Parent.Position;
+                if (Math.Abs(direction.X) > Math.Abs(direction.Y))
+                {
+                    direction = new Vector2(direction.X, 0);
+                }
+                else
+                {
+                    direction = new Vector2(0, direction.Y);
+                }
+                newPosition = Parent.Position + direction;
             }
         }
 
