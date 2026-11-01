@@ -10,7 +10,6 @@
 
   <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
     <OutputType>Exe</OutputType>
-    <NativeAot>true</NativeAot>
     <SelfContained>true</SelfContained>
     <WasmMainJSPath>Web/main.js</WasmMainJSPath>
     <WasmBuildNative>true</WasmBuildNative>

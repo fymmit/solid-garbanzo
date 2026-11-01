@@ -26,7 +26,7 @@ jobs:
         run: dotnet workload install wasm-tools
 
       - name: Publish WebAssembly build
-        run: dotnet publish src/WebHost/WebHost.csproj -c Release -r browser-wasm --self-contained
+        run: dotnet publish src/WebHost/WebHost.csproj -c Release -r browser-wasm --self-contained -p:PublishAot=false
 
       - name: Install Butler
         run: |

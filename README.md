@@ -17,7 +17,7 @@ hosts the game in the browser through WebAssembly.
 The browser version uses Raylib's WebAssembly/WebGL backend through Raylib-cs.
 
 ```sh
-dotnet publish src/WebHost/WebHost.csproj -c Release -r browser-wasm --self-contained
+dotnet publish src/WebHost/WebHost.csproj -c Release -r browser-wasm --self-contained -p:PublishAot=false
 ```
 
 To test the published bundle locally:
